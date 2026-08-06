@@ -1,0 +1,7 @@
+body {
+  margin: 0;
+  padding: var(--uikit-space-6);
+  background-color: var(--uikit-color-bg);
+  color: var(--uikit-color-fg);
+  font-family: var(--uikit-font-family);
+}
