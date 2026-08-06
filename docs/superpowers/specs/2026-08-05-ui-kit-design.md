@@ -95,6 +95,7 @@
 | `--uikit-color-focus-ring` | `primary-500` | `primary-400` |
 | `--uikit-color-disabled-bg` | `gray-100` | `gray-800` |
 | `--uikit-color-disabled-fg` | `gray-400` | `gray-600` |
+| `--uikit-color-disabled-border` | `gray-200` | `gray-700` |
 
 ### 스킴 슬롯 — `colorScheme`을 가능하게 하는 간접 참조
 
@@ -183,12 +184,14 @@ letter-spacing: `tight` -0.02em, `normal` 0, `wide` 0.02em.
 
 | 토큰 | 값 | 토큰 | 값 |
 |---|---|---|---|
-| `space-0` | 0 | `space-6` | 1.5rem (24px) |
-| `space-1` | 0.25rem (4px) | `space-8` | 2rem (32px) |
+| `space-0` | 0 | `space-5` | 1.25rem (20px) |
+| `space-1` | 0.25rem (4px) | `space-6` | 1.5rem (24px) |
+| `space-1-5` | 0.375rem (6px) | `space-8` | 2rem (32px) |
 | `space-2` | 0.5rem (8px) | `space-10` | 2.5rem (40px) |
 | `space-3` | 0.75rem (12px) | `space-12` | 3rem (48px) |
 | `space-4` | 1rem (16px) | `space-16` | 4rem (64px) |
-| `space-5` | 1.25rem (20px) | | |
+
+`space-1-5`(6px)만 4px 스케일의 반 단계다. 아이콘과 텍스트 사이 간격처럼 4px는 좁고 8px는 넓은 컴포넌트 내부 치수가 실제로 존재하기 때문에 둔다. 2px 서브그리드 위에 있어 스케일이 깨지지 않는다. 레이아웃 간격에는 쓰지 않고 컴포넌트 내부 치수에만 쓴다.
 
 ### 컨트롤 높이
 
@@ -262,8 +265,11 @@ shadow는 4단계다.
 | `duration-fast` | 150ms | | `ease-in` | `cubic-bezier(0.7, 0, 0.84, 0)` |
 | `duration-normal` | 200ms | | `ease-in-out` | `cubic-bezier(0.65, 0, 0.35, 1)` |
 | `duration-slow` | 300ms | | `ease-spring` | `cubic-bezier(0.34, 1.56, 0.64, 1)` |
+| `duration-spin` | 600ms | | | |
 
-등장에는 `ease-out`, 퇴장에는 `ease-in`을 쓴다. `prefers-reduced-motion: reduce`에서 모든 duration 토큰을 `0.01ms`로 재정의해 한 곳에서 전역 차단한다.
+등장에는 `ease-out`, 퇴장에는 `ease-in`을 쓴다. `prefers-reduced-motion: reduce`에서 duration 토큰을 `0.01ms`로 재정의해 한 곳에서 전역 차단한다.
+
+`duration-spin`만 예외로 `1.5s`가 된다. 로딩 스피너는 진행 중이라는 상태를 전달하는 요소라 완전히 멈추면 정보가 사라진다. 회전을 느리게 해 어지러움만 줄인다. 전역 차단 규칙에 이 토큰까지 포함시키면 스피너가 초당 100회 회전하게 되므로 반드시 따로 처리한다.
 
 ## 반응형 전략
 
