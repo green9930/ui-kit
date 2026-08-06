@@ -1,3 +1,5 @@
+/// <reference types="vitest/config" />
+
 import { extname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
@@ -38,5 +40,10 @@ export default defineConfig({
         assetFileNames: 'assets/[name][extname]',
       },
     },
+  },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./vitest.setup.ts'],
+    css: true,
   },
 })
