@@ -1,3 +1,13 @@
+/*
+ * outline-border는 outline-fg를 그대로 참조한다. 테두리와 글자가 항상 같은 색이어야
+ * 한다는 요구를 토큰 층에서 못 박은 것으로, 스킴을 추가하거나 소비자가 outline-fg를
+ * 덮어써도 자동으로 따라온다.
+ *
+ * 반대 방향(글자를 테두리 색에 맞추기)은 쓸 수 없다. 테두리는 비텍스트 UI라 3:1이면
+ * 되지만 글자는 4.5:1이 필요한데, 흰 배경 위 warning-600은 3.19:1, success-600은
+ * 3.30:1로 글자로 쓰면 AA를 통과하지 못한다. 어두운 쪽(글자 색)으로 맞춰야 양쪽이
+ * 모두 성립한다.
+ */
 :where([data-scheme='primary']) {
   --uikit-scheme-solid-bg: var(--uikit-color-primary-600);
   --uikit-scheme-solid-bg-hover: var(--uikit-color-primary-700);
@@ -6,7 +16,7 @@
   --uikit-scheme-subtle-bg: var(--uikit-color-primary-50);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-primary-100);
   --uikit-scheme-subtle-fg: var(--uikit-color-primary-700);
-  --uikit-scheme-outline-border: var(--uikit-color-primary-600);
+  --uikit-scheme-outline-border: var(--uikit-scheme-outline-fg);
   --uikit-scheme-outline-fg: var(--uikit-color-primary-700);
   --uikit-scheme-outline-bg-hover: var(--uikit-color-primary-50);
   --uikit-scheme-ghost-fg: var(--uikit-color-primary-700);
@@ -22,7 +32,7 @@
   --uikit-scheme-subtle-bg: var(--uikit-color-secondary-50);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-secondary-100);
   --uikit-scheme-subtle-fg: var(--uikit-color-secondary-700);
-  --uikit-scheme-outline-border: var(--uikit-color-secondary-600);
+  --uikit-scheme-outline-border: var(--uikit-scheme-outline-fg);
   --uikit-scheme-outline-fg: var(--uikit-color-secondary-700);
   --uikit-scheme-outline-bg-hover: var(--uikit-color-secondary-50);
   --uikit-scheme-ghost-fg: var(--uikit-color-secondary-700);
@@ -38,7 +48,7 @@
   --uikit-scheme-subtle-bg: var(--uikit-color-danger-50);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-danger-100);
   --uikit-scheme-subtle-fg: var(--uikit-color-danger-700);
-  --uikit-scheme-outline-border: var(--uikit-color-danger-600);
+  --uikit-scheme-outline-border: var(--uikit-scheme-outline-fg);
   --uikit-scheme-outline-fg: var(--uikit-color-danger-700);
   --uikit-scheme-outline-bg-hover: var(--uikit-color-danger-50);
   --uikit-scheme-ghost-fg: var(--uikit-color-danger-700);
@@ -54,7 +64,7 @@
   --uikit-scheme-subtle-bg: var(--uikit-color-warning-50);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-warning-100);
   --uikit-scheme-subtle-fg: var(--uikit-color-warning-800);
-  --uikit-scheme-outline-border: var(--uikit-color-warning-600);
+  --uikit-scheme-outline-border: var(--uikit-scheme-outline-fg);
   --uikit-scheme-outline-fg: var(--uikit-color-warning-800);
   --uikit-scheme-outline-bg-hover: var(--uikit-color-warning-50);
   --uikit-scheme-ghost-fg: var(--uikit-color-warning-800);
@@ -70,7 +80,7 @@
   --uikit-scheme-subtle-bg: var(--uikit-color-success-50);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-success-100);
   --uikit-scheme-subtle-fg: var(--uikit-color-success-800);
-  --uikit-scheme-outline-border: var(--uikit-color-success-700);
+  --uikit-scheme-outline-border: var(--uikit-scheme-outline-fg);
   --uikit-scheme-outline-fg: var(--uikit-color-success-800);
   --uikit-scheme-outline-bg-hover: var(--uikit-color-success-50);
   --uikit-scheme-ghost-fg: var(--uikit-color-success-800);
@@ -82,9 +92,9 @@
  * 다크모드 재정의. light 슬롯은 흰 배경(--uikit-color-bg light) 대비 4.5:1을 넘기도록 700~800
  * 스텝을 썼지만, 다크 배경(--uikit-color-bg dark = gray-900 #0F172A)에서는 같은 스텝이
  * 2.5~2.8:1까지 떨어져 WCAG AA(4.5:1)를 크게 밑돈다. outline-fg/ghost-fg는 300 스텝,
- * outline-border/focus-ring은 400 스텝으로 뒤집는다 — 팔레트 500 마디를 기준으로 밝은
- * 방향과 어두운 방향에 각각 대비가 확보된 스텝을 선택한 것으로, 정확한 대비값은
- * final-fix-report.md에 정리했다(모두 4.5:1 이상, primary 9.9:1 ~ warning/success 12:1대).
+ * focus-ring은 400 스텝으로 뒤집는다 — 팔레트 500 마디를 기준으로 밝은
+ * 방향과 어두운 방향에 각각 대비가 확보된 스텝을 선택한 것으로, 모두 4.5:1 이상이다
+ * (primary 9.9:1 ~ warning/success 12:1대).
  * outline-bg-hover/ghost-bg-hover는 텍스트가 아니라 hover 시 배경 틴트일 뿐이라 4.5:1
  * 요건이 없다 — light의 50(거의-흰색) 대신 700을 써서 gray-900/gray-800 위에서도 옅은
  * 흰 블롭이 되지 않고 스킴 색조가 드러나도록 한다.
@@ -95,7 +105,7 @@
   --uikit-scheme-subtle-bg: var(--uikit-color-primary-900);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-primary-800);
   --uikit-scheme-subtle-fg: var(--uikit-color-primary-300);
-  --uikit-scheme-outline-border: var(--uikit-color-primary-400);
+  --uikit-scheme-outline-border: var(--uikit-scheme-outline-fg);
   --uikit-scheme-outline-fg: var(--uikit-color-primary-300);
   --uikit-scheme-outline-bg-hover: var(--uikit-color-primary-700);
   --uikit-scheme-ghost-fg: var(--uikit-color-primary-300);
@@ -107,7 +117,7 @@
   --uikit-scheme-subtle-bg: var(--uikit-color-secondary-900);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-secondary-800);
   --uikit-scheme-subtle-fg: var(--uikit-color-secondary-300);
-  --uikit-scheme-outline-border: var(--uikit-color-secondary-400);
+  --uikit-scheme-outline-border: var(--uikit-scheme-outline-fg);
   --uikit-scheme-outline-fg: var(--uikit-color-secondary-300);
   --uikit-scheme-outline-bg-hover: var(--uikit-color-secondary-700);
   --uikit-scheme-ghost-fg: var(--uikit-color-secondary-300);
@@ -119,7 +129,7 @@
   --uikit-scheme-subtle-bg: var(--uikit-color-danger-900);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-danger-800);
   --uikit-scheme-subtle-fg: var(--uikit-color-danger-300);
-  --uikit-scheme-outline-border: var(--uikit-color-danger-400);
+  --uikit-scheme-outline-border: var(--uikit-scheme-outline-fg);
   --uikit-scheme-outline-fg: var(--uikit-color-danger-300);
   --uikit-scheme-outline-bg-hover: var(--uikit-color-danger-700);
   --uikit-scheme-ghost-fg: var(--uikit-color-danger-300);
@@ -133,7 +143,7 @@
   --uikit-scheme-subtle-bg: var(--uikit-color-warning-900);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-warning-800);
   --uikit-scheme-subtle-fg: var(--uikit-color-warning-300);
-  --uikit-scheme-outline-border: var(--uikit-color-warning-400);
+  --uikit-scheme-outline-border: var(--uikit-scheme-outline-fg);
   --uikit-scheme-outline-fg: var(--uikit-color-warning-300);
   --uikit-scheme-outline-bg-hover: var(--uikit-color-warning-700);
   --uikit-scheme-ghost-fg: var(--uikit-color-warning-300);
@@ -145,7 +155,7 @@
   --uikit-scheme-subtle-bg: var(--uikit-color-success-900);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-success-800);
   --uikit-scheme-subtle-fg: var(--uikit-color-success-300);
-  --uikit-scheme-outline-border: var(--uikit-color-success-400);
+  --uikit-scheme-outline-border: var(--uikit-scheme-outline-fg);
   --uikit-scheme-outline-fg: var(--uikit-color-success-300);
   --uikit-scheme-outline-bg-hover: var(--uikit-color-success-700);
   --uikit-scheme-ghost-fg: var(--uikit-color-success-300);
