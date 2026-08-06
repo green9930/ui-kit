@@ -4,9 +4,16 @@ export interface TokenOverrides {
   [cssVariable: string]: string
 }
 
+/** JSON.parse가 성공해도 `null`, 배열, 문자열/숫자 등 객체가 아닌 값일 수 있다 —
+ *  그런 값을 그대로 반환하면 호출부의 `Object.entries()`가 던진다. */
+function isTokenOverrides(value: unknown): value is TokenOverrides {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
 export function readOverrides(): TokenOverrides {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}') as TokenOverrides
+    const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}') as unknown
+    return isTokenOverrides(parsed) ? parsed : {}
   } catch {
     return {}
   }
