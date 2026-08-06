@@ -1,0 +1,79 @@
+:where([data-scheme='primary']) {
+  --uikit-scheme-solid-bg: var(--uikit-color-primary-600);
+  --uikit-scheme-solid-bg-hover: var(--uikit-color-primary-700);
+  --uikit-scheme-solid-bg-active: var(--uikit-color-primary-800);
+  --uikit-scheme-solid-fg: #ffffff;
+  --uikit-scheme-subtle-bg: var(--uikit-color-primary-50);
+  --uikit-scheme-subtle-bg-hover: var(--uikit-color-primary-100);
+  --uikit-scheme-subtle-fg: var(--uikit-color-primary-700);
+  --uikit-scheme-outline-border: var(--uikit-color-primary-600);
+  --uikit-scheme-outline-fg: var(--uikit-color-primary-700);
+  --uikit-scheme-outline-bg-hover: var(--uikit-color-primary-50);
+  --uikit-scheme-ghost-fg: var(--uikit-color-primary-700);
+  --uikit-scheme-ghost-bg-hover: var(--uikit-color-primary-50);
+  --uikit-scheme-focus-ring: var(--uikit-color-primary-500);
+}
+
+:where([data-scheme='secondary']) {
+  --uikit-scheme-solid-bg: var(--uikit-color-secondary-600);
+  --uikit-scheme-solid-bg-hover: var(--uikit-color-secondary-700);
+  --uikit-scheme-solid-bg-active: var(--uikit-color-secondary-800);
+  --uikit-scheme-solid-fg: #ffffff;
+  --uikit-scheme-subtle-bg: var(--uikit-color-secondary-50);
+  --uikit-scheme-subtle-bg-hover: var(--uikit-color-secondary-100);
+  --uikit-scheme-subtle-fg: var(--uikit-color-secondary-700);
+  --uikit-scheme-outline-border: var(--uikit-color-secondary-600);
+  --uikit-scheme-outline-fg: var(--uikit-color-secondary-700);
+  --uikit-scheme-outline-bg-hover: var(--uikit-color-secondary-50);
+  --uikit-scheme-ghost-fg: var(--uikit-color-secondary-700);
+  --uikit-scheme-ghost-bg-hover: var(--uikit-color-secondary-50);
+  --uikit-scheme-focus-ring: var(--uikit-color-secondary-500);
+}
+
+:where([data-scheme='danger']) {
+  --uikit-scheme-solid-bg: var(--uikit-color-danger-600);
+  --uikit-scheme-solid-bg-hover: var(--uikit-color-danger-700);
+  --uikit-scheme-solid-bg-active: var(--uikit-color-danger-800);
+  --uikit-scheme-solid-fg: #ffffff;
+  --uikit-scheme-subtle-bg: var(--uikit-color-danger-50);
+  --uikit-scheme-subtle-bg-hover: var(--uikit-color-danger-100);
+  --uikit-scheme-subtle-fg: var(--uikit-color-danger-700);
+  --uikit-scheme-outline-border: var(--uikit-color-danger-600);
+  --uikit-scheme-outline-fg: var(--uikit-color-danger-700);
+  --uikit-scheme-outline-bg-hover: var(--uikit-color-danger-50);
+  --uikit-scheme-ghost-fg: var(--uikit-color-danger-700);
+  --uikit-scheme-ghost-bg-hover: var(--uikit-color-danger-50);
+  --uikit-scheme-focus-ring: var(--uikit-color-danger-500);
+}
+
+:where([data-scheme='warning']) {
+  --uikit-scheme-solid-bg: var(--uikit-color-warning-500);
+  --uikit-scheme-solid-bg-hover: var(--uikit-color-warning-600);
+  --uikit-scheme-solid-bg-active: var(--uikit-color-warning-700);
+  --uikit-scheme-solid-fg: var(--uikit-color-gray-900);
+  --uikit-scheme-subtle-bg: var(--uikit-color-warning-50);
+  --uikit-scheme-subtle-bg-hover: var(--uikit-color-warning-100);
+  --uikit-scheme-subtle-fg: var(--uikit-color-warning-800);
+  --uikit-scheme-outline-border: var(--uikit-color-warning-600);
+  --uikit-scheme-outline-fg: var(--uikit-color-warning-800);
+  --uikit-scheme-outline-bg-hover: var(--uikit-color-warning-50);
+  --uikit-scheme-ghost-fg: var(--uikit-color-warning-800);
+  --uikit-scheme-ghost-bg-hover: var(--uikit-color-warning-50);
+  --uikit-scheme-focus-ring: var(--uikit-color-warning-500);
+}
+
+:where([data-scheme='success']) {
+  --uikit-scheme-solid-bg: var(--uikit-color-success-700);
+  --uikit-scheme-solid-bg-hover: var(--uikit-color-success-800);
+  --uikit-scheme-solid-bg-active: var(--uikit-color-success-900);
+  --uikit-scheme-solid-fg: #ffffff;
+  --uikit-scheme-subtle-bg: var(--uikit-color-success-50);
+  --uikit-scheme-subtle-bg-hover: var(--uikit-color-success-100);
+  --uikit-scheme-subtle-fg: var(--uikit-color-success-800);
+  --uikit-scheme-outline-border: var(--uikit-color-success-700);
+  --uikit-scheme-outline-fg: var(--uikit-color-success-800);
+  --uikit-scheme-outline-bg-hover: var(--uikit-color-success-50);
+  --uikit-scheme-ghost-fg: var(--uikit-color-success-800);
+  --uikit-scheme-ghost-bg-hover: var(--uikit-color-success-50);
+  --uikit-scheme-focus-ring: var(--uikit-color-success-500);
+}
