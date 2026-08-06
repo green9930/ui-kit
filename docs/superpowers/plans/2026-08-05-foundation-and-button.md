@@ -658,7 +658,7 @@ git commit -m "feat: add Slot for asChild prop support"
 **Interfaces:**
 - Consumes: 없음
 - Produces: Task 5의 Button과 Task 6~7의 Storybook이 참조하는 전체 토큰. Button이 실제로 쓰는 것들:
-  `--uikit-control-height-{sm,md,lg}`, `--uikit-space-{1,1-5,2,3,4,5}`, `--uikit-font-size-{sm,md}`, `--uikit-font-weight-medium`, `--uikit-line-height-tight`, `--uikit-radius-{sm,md,lg,full}`, `--uikit-border-width-thin`, `--uikit-duration-fast`, `--uikit-duration-spin`, `--uikit-ease-out`, `--uikit-color-disabled-{bg,fg,border}`, `--uikit-scheme-solid-{bg,bg-hover,bg-active,fg}`, `--uikit-scheme-outline-{border,fg,bg-hover}`, `--uikit-scheme-ghost-{fg,bg-hover}`, `--uikit-scheme-focus-ring`
+  `--uikit-control-height-{sm,md,lg}`, `--uikit-space-{1,1-5,2,3,4,5}`, `--uikit-font-size-{sm,md}`, `--uikit-font-weight-medium`, `--uikit-line-height-tight`, `--uikit-radius-{sm,md,lg,full}`, `--uikit-border-width-thin`, `--uikit-duration-fast`, `--uikit-duration-spin`, `--uikit-ease-out`, `--uikit-color-disabled-{bg,fg,border}`, `--uikit-scheme-solid-{bg,bg-hover,bg-active,fg}`, `--uikit-scheme-outline-{border,fg,bg-hover}`, `--uikit-scheme-ghost-{fg,bg-hover}`, `--uikit-scheme-focus-ring`, `--uikit-button-min-width-{sm,md,lg}`, `--uikit-button-icon-size-{sm,md,lg}`
 
 - [ ] **Step 1: 원시 팔레트 작성**
 
@@ -964,6 +964,17 @@ git commit -m "feat: add Slot for asChild prop support"
   --uikit-ease-in: cubic-bezier(0.7, 0, 0.84, 0);
   --uikit-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --uikit-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /*
+   * 컴포넌트 토큰 — 특정 컴포넌트에만 쓰이는 고유 치수.
+   * 컴포넌트 CSS 안에 리터럴로 두면 소비자가 덮어쓸 수 없으므로 루트에 올린다.
+   */
+  --uikit-button-min-width-sm: 64px;
+  --uikit-button-min-width-md: 80px;
+  --uikit-button-min-width-lg: 96px;
+  --uikit-button-icon-size-sm: 14px;
+  --uikit-button-icon-size-md: 16px;
+  --uikit-button-icon-size-lg: 18px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1334,9 +1345,9 @@ export type { Size, ColorScheme, Variant } from './types'
 /* ---- size ---- */
 
 .button[data-size='sm'] {
-  --uikit-button-icon-size: 14px;
+  --uikit-button-icon-size: var(--uikit-button-icon-size-sm);
   height: var(--uikit-control-height-sm);
-  min-width: 64px;
+  min-width: var(--uikit-button-min-width-sm);
   padding-inline: var(--uikit-space-3);
   gap: var(--uikit-space-1);
   font-size: var(--uikit-font-size-sm);
@@ -1344,9 +1355,9 @@ export type { Size, ColorScheme, Variant } from './types'
 }
 
 .button[data-size='md'] {
-  --uikit-button-icon-size: 16px;
+  --uikit-button-icon-size: var(--uikit-button-icon-size-md);
   height: var(--uikit-control-height-md);
-  min-width: 80px;
+  min-width: var(--uikit-button-min-width-md);
   padding-inline: var(--uikit-space-4);
   gap: var(--uikit-space-1-5);
   font-size: var(--uikit-font-size-sm);
@@ -1354,9 +1365,9 @@ export type { Size, ColorScheme, Variant } from './types'
 }
 
 .button[data-size='lg'] {
-  --uikit-button-icon-size: 18px;
+  --uikit-button-icon-size: var(--uikit-button-icon-size-lg);
   height: var(--uikit-control-height-lg);
-  min-width: 96px;
+  min-width: var(--uikit-button-min-width-lg);
   padding-inline: var(--uikit-space-5);
   gap: var(--uikit-space-2);
   font-size: var(--uikit-font-size-md);
