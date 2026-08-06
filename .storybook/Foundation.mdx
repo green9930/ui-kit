@@ -1,0 +1,165 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Foundation/Overview" />
+
+# Foundation
+
+모든 컴포넌트는 여기 정의된 토큰만 참조합니다. 컴포넌트 CSS에 하드코딩된 값은 없습니다.
+
+소비하는 프로젝트에서 아래처럼 덮어쓰면 모든 컴포넌트에 반영됩니다.
+
+```css
+:root {
+  --uikit-color-primary-600: #ff5722;
+  --uikit-radius-md: 12px;
+}
+```
+
+## 색상 팔레트
+
+<div style={{ display: 'grid', gap: 16 }}>
+  {['gray', 'primary', 'secondary', 'danger', 'warning', 'success'].map((scheme) => (
+    <div key={scheme}>
+      <strong>{scheme}</strong>
+      <div style={{ display: 'flex', marginTop: 4 }}>
+        {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map((step) => (
+          <div key={step} style={{ flex: 1, textAlign: 'center', fontSize: 10 }}>
+            <div
+              style={{
+                height: 48,
+                background: `var(--uikit-color-${scheme}-${step})`,
+                border: '1px solid var(--uikit-color-border)',
+              }}
+            />
+            {step}
+          </div>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>
+
+`gray`는 팔레트로만 존재하며 `colorScheme` 값으로는 노출되지 않습니다.
+
+## 타이포그래피
+
+<div style={{ display: 'grid', gap: 8 }}>
+  {['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'].map((size) => (
+    <div key={size} style={{ fontSize: `var(--uikit-font-size-${size})` }}>
+      font-size-{size} — 다람쥐 헌 쳇바퀴에 타고파 The quick brown fox
+    </div>
+  ))}
+</div>
+
+## 간격
+
+<div style={{ display: 'grid', gap: 4 }}>
+  {['1', '1-5', '2', '3', '4', '5', '6', '8', '10', '12', '16'].map((step) => (
+    <div key={step} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <code style={{ width: 160, fontSize: 12 }}>--uikit-space-{step}</code>
+      <div
+        style={{
+          height: 16,
+          width: `var(--uikit-space-${step})`,
+          background: 'var(--uikit-color-primary-500)',
+        }}
+      />
+    </div>
+  ))}
+</div>
+
+`space-1-5`(6px)는 4px 스케일의 반 단계입니다. 아이콘과 텍스트 사이 간격처럼 4px는 좁고
+8px는 넓은 컴포넌트 내부 치수를 위해 존재합니다.
+
+## 컨트롤 높이
+
+`size` 축은 height로 구분합니다. Button, Input, Select 등 인터랙티브 컨트롤이 같은 토큰을
+공유하므로 나란히 놓으면 높이가 정확히 맞습니다.
+
+<div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+  {['sm', 'md', 'lg'].map((size) => (
+    <div
+      key={size}
+      style={{
+        height: `var(--uikit-control-height-${size})`,
+        padding: '0 var(--uikit-space-4)',
+        display: 'flex',
+        alignItems: 'center',
+        border: '1px solid var(--uikit-color-border)',
+        borderRadius: 'var(--uikit-radius-md)',
+        fontSize: 12,
+      }}
+    >
+      {size}
+    </div>
+  ))}
+</div>
+
+## radius와 shadow
+
+<div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+  {['sm', 'md', 'lg', 'xl', 'full'].map((r) => (
+    <div
+      key={r}
+      style={{
+        width: 88,
+        height: 56,
+        display: 'grid',
+        placeItems: 'center',
+        fontSize: 12,
+        background: 'var(--uikit-color-surface)',
+        border: '1px solid var(--uikit-color-border)',
+        borderRadius: `var(--uikit-radius-${r})`,
+      }}
+    >
+      {r}
+    </div>
+  ))}
+</div>
+
+<div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', marginTop: 24 }}>
+  {['sm', 'md', 'lg', 'xl'].map((s) => (
+    <div
+      key={s}
+      style={{
+        width: 88,
+        height: 56,
+        display: 'grid',
+        placeItems: 'center',
+        fontSize: 12,
+        background: 'var(--uikit-color-surface)',
+        borderRadius: 'var(--uikit-radius-md)',
+        boxShadow: `var(--uikit-shadow-${s})`,
+      }}
+    >
+      {s}
+    </div>
+  ))}
+</div>
+
+## z-index
+
+| 토큰 | 값 | 토큰 | 값 |
+|---|---|---|---|
+| `--uikit-z-base` | 0 | `--uikit-z-modal` | 1300 |
+| `--uikit-z-dropdown` | 1000 | `--uikit-z-popover` | 1400 |
+| `--uikit-z-sticky` | 1100 | `--uikit-z-toast` | 1500 |
+| `--uikit-z-overlay` | 1200 | `--uikit-z-tooltip` | 1600 |
+
+## breakpoint
+
+| 이름 | 값 |
+|---|---|
+| `--uikit-sm` | 640px |
+| `--uikit-md` | 768px |
+| `--uikit-lg` | 1024px |
+| `--uikit-xl` | 1280px |
+
+breakpoint만은 CSS 커스텀 프로퍼티가 아닙니다. 미디어쿼리가 `var()`를 해석하지 못하기
+때문에 PostCSS의 `@custom-media`로 관리하며, 소비자가 런타임에 덮어쓸 수 없습니다.
+
+## motion
+
+`prefers-reduced-motion: reduce`에서 duration 토큰은 모두 `0.01ms`가 됩니다. 다만
+`--uikit-duration-spin`만 `1.5s`로 남습니다. 로딩 스피너는 진행 중이라는 상태를 전달하므로
+멈추면 정보가 사라지기 때문입니다.
