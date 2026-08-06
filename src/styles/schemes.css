@@ -77,3 +77,78 @@
   --uikit-scheme-ghost-bg-hover: var(--uikit-color-success-50);
   --uikit-scheme-focus-ring: var(--uikit-color-success-500);
 }
+
+/*
+ * 다크모드 재정의. light 슬롯은 흰 배경(--uikit-color-bg light) 대비 4.5:1을 넘기도록 700~800
+ * 스텝을 썼지만, 다크 배경(--uikit-color-bg dark = gray-900 #0F172A)에서는 같은 스텝이
+ * 2.5~2.8:1까지 떨어져 WCAG AA(4.5:1)를 크게 밑돈다. outline-fg/ghost-fg는 300 스텝,
+ * outline-border/focus-ring은 400 스텝으로 뒤집는다 — 팔레트 500 마디를 기준으로 밝은
+ * 방향과 어두운 방향에 각각 대비가 확보된 스텝을 선택한 것으로, 정확한 대비값은
+ * final-fix-report.md에 정리했다(모두 4.5:1 이상, primary 9.9:1 ~ warning/success 12:1대).
+ * outline-bg-hover/ghost-bg-hover는 텍스트가 아니라 hover 시 배경 틴트일 뿐이라 4.5:1
+ * 요건이 없다 — light의 50(거의-흰색) 대신 700을 써서 gray-900/gray-800 위에서도 옅은
+ * 흰 블롭이 되지 않고 스킴 색조가 드러나도록 한다.
+ * solid는 재정의하지 않는다 — 흰 글자(또는 warning의 gray-900) on 채도 높은 배경이라
+ * 페이지 배경과 무관하게 대비가 성립한다(스펙 참조).
+ */
+:where([data-theme='dark'] [data-scheme='primary']) {
+  --uikit-scheme-subtle-bg: var(--uikit-color-primary-900);
+  --uikit-scheme-subtle-bg-hover: var(--uikit-color-primary-800);
+  --uikit-scheme-subtle-fg: var(--uikit-color-primary-300);
+  --uikit-scheme-outline-border: var(--uikit-color-primary-400);
+  --uikit-scheme-outline-fg: var(--uikit-color-primary-300);
+  --uikit-scheme-outline-bg-hover: var(--uikit-color-primary-700);
+  --uikit-scheme-ghost-fg: var(--uikit-color-primary-300);
+  --uikit-scheme-ghost-bg-hover: var(--uikit-color-primary-700);
+  --uikit-scheme-focus-ring: var(--uikit-color-primary-400);
+}
+
+:where([data-theme='dark'] [data-scheme='secondary']) {
+  --uikit-scheme-subtle-bg: var(--uikit-color-secondary-900);
+  --uikit-scheme-subtle-bg-hover: var(--uikit-color-secondary-800);
+  --uikit-scheme-subtle-fg: var(--uikit-color-secondary-300);
+  --uikit-scheme-outline-border: var(--uikit-color-secondary-400);
+  --uikit-scheme-outline-fg: var(--uikit-color-secondary-300);
+  --uikit-scheme-outline-bg-hover: var(--uikit-color-secondary-700);
+  --uikit-scheme-ghost-fg: var(--uikit-color-secondary-300);
+  --uikit-scheme-ghost-bg-hover: var(--uikit-color-secondary-700);
+  --uikit-scheme-focus-ring: var(--uikit-color-secondary-400);
+}
+
+:where([data-theme='dark'] [data-scheme='danger']) {
+  --uikit-scheme-subtle-bg: var(--uikit-color-danger-900);
+  --uikit-scheme-subtle-bg-hover: var(--uikit-color-danger-800);
+  --uikit-scheme-subtle-fg: var(--uikit-color-danger-300);
+  --uikit-scheme-outline-border: var(--uikit-color-danger-400);
+  --uikit-scheme-outline-fg: var(--uikit-color-danger-300);
+  --uikit-scheme-outline-bg-hover: var(--uikit-color-danger-700);
+  --uikit-scheme-ghost-fg: var(--uikit-color-danger-300);
+  --uikit-scheme-ghost-bg-hover: var(--uikit-color-danger-700);
+  --uikit-scheme-focus-ring: var(--uikit-color-danger-400);
+}
+
+/* warning의 solid-fg는 gray-900(어두운 전경)로 고정이지만, outline/ghost는 투명 배경이라
+   다른 스킴과 똑같이 밝은 스텝(300/400)이 다크 배경 대비를 만족시킨다. */
+:where([data-theme='dark'] [data-scheme='warning']) {
+  --uikit-scheme-subtle-bg: var(--uikit-color-warning-900);
+  --uikit-scheme-subtle-bg-hover: var(--uikit-color-warning-800);
+  --uikit-scheme-subtle-fg: var(--uikit-color-warning-300);
+  --uikit-scheme-outline-border: var(--uikit-color-warning-400);
+  --uikit-scheme-outline-fg: var(--uikit-color-warning-300);
+  --uikit-scheme-outline-bg-hover: var(--uikit-color-warning-700);
+  --uikit-scheme-ghost-fg: var(--uikit-color-warning-300);
+  --uikit-scheme-ghost-bg-hover: var(--uikit-color-warning-700);
+  --uikit-scheme-focus-ring: var(--uikit-color-warning-400);
+}
+
+:where([data-theme='dark'] [data-scheme='success']) {
+  --uikit-scheme-subtle-bg: var(--uikit-color-success-900);
+  --uikit-scheme-subtle-bg-hover: var(--uikit-color-success-800);
+  --uikit-scheme-subtle-fg: var(--uikit-color-success-300);
+  --uikit-scheme-outline-border: var(--uikit-color-success-400);
+  --uikit-scheme-outline-fg: var(--uikit-color-success-300);
+  --uikit-scheme-outline-bg-hover: var(--uikit-color-success-700);
+  --uikit-scheme-ghost-fg: var(--uikit-color-success-300);
+  --uikit-scheme-ghost-bg-hover: var(--uikit-color-success-700);
+  --uikit-scheme-focus-ring: var(--uikit-color-success-400);
+}
