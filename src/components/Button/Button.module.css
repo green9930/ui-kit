@@ -82,6 +82,11 @@
 .button:where([data-variant='solid']) {
   background-color: var(--uikit-scheme-solid-bg);
   color: var(--uikit-scheme-solid-fg);
+  /*
+   * --uikit-scheme-glow는 다크 스킴 블록에서만 정의된다. 라이트에서는 var()가
+   * 폴백 none으로 떨어져 그림자가 자동으로 꺼지므로 테마 분기가 따로 필요 없다.
+   */
+  box-shadow: var(--uikit-scheme-glow, none);
 }
 
 .button:where([data-variant='solid']:hover:not([data-disabled])) {
@@ -118,7 +123,8 @@
 .button:where([data-variant='link']) {
   height: auto;
   min-width: 0;
-  padding-inline: 0;
+  /* 인라인 텍스트처럼 흐르되 클릭 영역이 글자에 딱 붙지 않도록 최소 여백만 둔다 */
+  padding-inline: var(--uikit-space-1);
   border-width: 0;
   background-color: transparent;
   color: var(--uikit-scheme-ghost-fg);
@@ -140,6 +146,8 @@
 .button:where([data-variant='solid'][data-disabled]) {
   background-color: var(--uikit-color-disabled-bg);
   border-color: transparent;
+  /* 비활성 버튼이 발광하면 안 된다 */
+  box-shadow: none;
 }
 
 .button:where([data-variant='outline'][data-disabled]) {

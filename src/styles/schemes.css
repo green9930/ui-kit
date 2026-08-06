@@ -98,10 +98,18 @@
  * outline-bg-hover/ghost-bg-hover는 텍스트가 아니라 hover 시 배경 틴트일 뿐이라 4.5:1
  * 요건이 없다 — light의 50(거의-흰색) 대신 700을 써서 gray-900/gray-800 위에서도 옅은
  * 흰 블롭이 되지 않고 스킴 색조가 드러나도록 한다.
- * solid는 재정의하지 않는다 — 흰 글자(또는 warning의 gray-900) on 채도 높은 배경이라
- * 페이지 배경과 무관하게 대비가 성립한다(스펙 참조).
+ * solid는 반전한다. 라이트에서는 어두운 면 + 흰 글자지만, 다크에서는 밝은 400 스텝을
+ * 면으로 쓰고 글자를 gray-900으로 뒤집는다. 어두운 페이지에서 면이 발광하듯 보이는
+ * 패턴으로, 대비는 6.5~10.7:1로 오히려 더 여유롭다. --uikit-scheme-glow는 라이트에서
+ * 정의되지 않으므로 컴포넌트 쪽 var() 폴백이 none으로 떨어져 자동으로 꺼진다.
  */
 :where([data-theme='dark'] [data-scheme='primary']) {
+  /* 다크에서는 solid를 반전한다 — 밝은 면 + 거의 검은 글자. 네온 인상의 핵심이다. */
+  --uikit-scheme-solid-bg: var(--uikit-color-primary-400);
+  --uikit-scheme-solid-bg-hover: var(--uikit-color-primary-300);
+  --uikit-scheme-solid-bg-active: var(--uikit-color-primary-200);
+  --uikit-scheme-solid-fg: var(--uikit-color-gray-900);
+  --uikit-scheme-glow: 0 0 24px -6px var(--uikit-color-primary-400);
   --uikit-scheme-subtle-bg: var(--uikit-color-primary-900);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-primary-800);
   --uikit-scheme-subtle-fg: var(--uikit-color-primary-300);
@@ -114,6 +122,12 @@
 }
 
 :where([data-theme='dark'] [data-scheme='secondary']) {
+  /* 다크에서는 solid를 반전한다 — 밝은 면 + 거의 검은 글자. 네온 인상의 핵심이다. */
+  --uikit-scheme-solid-bg: var(--uikit-color-secondary-400);
+  --uikit-scheme-solid-bg-hover: var(--uikit-color-secondary-300);
+  --uikit-scheme-solid-bg-active: var(--uikit-color-secondary-200);
+  --uikit-scheme-solid-fg: var(--uikit-color-gray-900);
+  --uikit-scheme-glow: 0 0 24px -6px var(--uikit-color-secondary-400);
   --uikit-scheme-subtle-bg: var(--uikit-color-secondary-900);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-secondary-800);
   --uikit-scheme-subtle-fg: var(--uikit-color-secondary-300);
@@ -126,6 +140,12 @@
 }
 
 :where([data-theme='dark'] [data-scheme='danger']) {
+  /* 다크에서는 solid를 반전한다 — 밝은 면 + 거의 검은 글자. 네온 인상의 핵심이다. */
+  --uikit-scheme-solid-bg: var(--uikit-color-danger-400);
+  --uikit-scheme-solid-bg-hover: var(--uikit-color-danger-300);
+  --uikit-scheme-solid-bg-active: var(--uikit-color-danger-200);
+  --uikit-scheme-solid-fg: var(--uikit-color-gray-900);
+  --uikit-scheme-glow: 0 0 24px -6px var(--uikit-color-danger-400);
   --uikit-scheme-subtle-bg: var(--uikit-color-danger-900);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-danger-800);
   --uikit-scheme-subtle-fg: var(--uikit-color-danger-300);
@@ -140,6 +160,12 @@
 /* warning의 solid-fg는 gray-900(어두운 전경)로 고정이지만, outline/ghost는 투명 배경이라
    다른 스킴과 똑같이 밝은 스텝(300/400)이 다크 배경 대비를 만족시킨다. */
 :where([data-theme='dark'] [data-scheme='warning']) {
+  /* 다크에서는 solid를 반전한다 — 밝은 면 + 거의 검은 글자. 네온 인상의 핵심이다. */
+  --uikit-scheme-solid-bg: var(--uikit-color-warning-400);
+  --uikit-scheme-solid-bg-hover: var(--uikit-color-warning-300);
+  --uikit-scheme-solid-bg-active: var(--uikit-color-warning-200);
+  --uikit-scheme-solid-fg: var(--uikit-color-gray-900);
+  --uikit-scheme-glow: 0 0 24px -6px var(--uikit-color-warning-400);
   --uikit-scheme-subtle-bg: var(--uikit-color-warning-900);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-warning-800);
   --uikit-scheme-subtle-fg: var(--uikit-color-warning-300);
@@ -152,6 +178,12 @@
 }
 
 :where([data-theme='dark'] [data-scheme='success']) {
+  /* 다크에서는 solid를 반전한다 — 밝은 면 + 거의 검은 글자. 네온 인상의 핵심이다. */
+  --uikit-scheme-solid-bg: var(--uikit-color-success-400);
+  --uikit-scheme-solid-bg-hover: var(--uikit-color-success-300);
+  --uikit-scheme-solid-bg-active: var(--uikit-color-success-200);
+  --uikit-scheme-solid-fg: var(--uikit-color-gray-900);
+  --uikit-scheme-glow: 0 0 24px -6px var(--uikit-color-success-400);
   --uikit-scheme-subtle-bg: var(--uikit-color-success-900);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-success-800);
   --uikit-scheme-subtle-fg: var(--uikit-color-success-300);
