@@ -59,15 +59,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     ? {}
     : { type: type ?? 'button', disabled: isDisabled }
 
-  // asChild + 명시적 disabled일 때는 button의 disabled 속성을 쓸 수 없다(자식이 button이
-  // 아닐 수 있으므로). aria-disabled는 스크린리더에만 알릴 뿐 클릭/키보드 활성화를
-  // 막지 않으므로, 탭 순서에서 빼고 capture 단계에서 클릭 자체를 삼켜 자식 자신의
-  // 핸들러와 소비자가 넘긴 onClick 모두를 막는다. isLoading 단독으로는 막지 않는다
-  // (asChild + isLoading 조합은 여전히 클릭 가능해야 한다 — 로딩 표시는 시각적 상태일
-  // 뿐 상호작용을 끄는 것은 명시적 disabled의 역할이다).
+  // asChild + isDisabled(disabled 또는 isLoading)일 때는 button의 disabled 속성을
+  // 쓸 수 없다(자식이 button이 아닐 수 있으므로). aria-disabled/data-disabled는
+  // 스크린리더/CSS에만 알릴 뿐 클릭·키보드 활성화를 막지 않으므로, 탭 순서에서
+  // 빼고 capture 단계에서 클릭 자체를 삼켜 자식 자신의 핸들러와 소비자가 넘긴
+  // onClick 모두를 막는다. isLoading 단독일 때도 막아야 한다 — isLoading은 진행
+  // 중인 비동기 액션의 중복 제출을 막기 위한 것이고, aria-disabled/data-disabled가
+  // 이미 비활성으로 알리는 것과 실제 클릭 가능 여부가 같은 렌더 안에서 어긋나면
+  // 안 된다(native button은 disabled 속성 하나로 이 둘이 항상 같이 간다).
   // pointer-events는 건드리지 않는다 — Tooltip이 비활성 버튼 위에 붙을 수 있어야 한다.
   const disabledAsChildProps =
-    asChild && disabled
+    asChild && isDisabled
       ? {
           tabIndex: -1,
           onClickCapture: (event: MouseEvent) => {

@@ -127,7 +127,7 @@ describe('Button', () => {
     expect(link.querySelector('[aria-hidden="true"]')).not.toBeNull()
   })
 
-  it('forwards ref and still fires onClick when asChild and isLoading are combined, without a React warning', async () => {
+  it('forwards ref, blocks onClick, and removes from the tab order when asChild and isLoading are combined, without a React warning', async () => {
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
     const user = userEvent.setup()
     const ref = createRef<HTMLButtonElement>()
@@ -137,9 +137,11 @@ describe('Button', () => {
         <a href="/next">이동</a>
       </Button>,
     )
+    const link = screen.getByRole('link')
     expect(ref.current).toBeInstanceOf(HTMLAnchorElement)
-    await user.click(screen.getByRole('link'))
-    expect(onClick).toHaveBeenCalledTimes(1)
+    await user.click(link)
+    expect(onClick).not.toHaveBeenCalled()
+    expect(link).toHaveAttribute('tabindex', '-1')
     expect(consoleError).not.toHaveBeenCalled()
     consoleError.mockRestore()
   })
