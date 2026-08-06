@@ -1,0 +1,158 @@
+/* font-family만 specificity 0으로 낮춰 소비자의 `button { font-family: ... }`에 양보한다 */
+:where(.button) {
+  font-family: var(--uikit-font-family, inherit);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: var(--uikit-border-width-thin) solid transparent;
+  font-weight: var(--uikit-font-weight-medium);
+  line-height: var(--uikit-line-height-tight);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--uikit-duration-fast) var(--uikit-ease-out),
+    border-color var(--uikit-duration-fast) var(--uikit-ease-out),
+    color var(--uikit-duration-fast) var(--uikit-ease-out);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--uikit-scheme-focus-ring);
+  outline-offset: 2px;
+}
+
+.button > svg {
+  width: var(--uikit-button-icon-size);
+  height: var(--uikit-button-icon-size);
+  flex-shrink: 0;
+}
+
+/* ---- size ---- */
+
+.button[data-size='sm'] {
+  --uikit-button-icon-size: var(--uikit-button-icon-size-sm);
+  height: var(--uikit-control-height-sm);
+  min-width: var(--uikit-button-min-width-sm);
+  padding-inline: var(--uikit-space-3);
+  gap: var(--uikit-space-1);
+  font-size: var(--uikit-font-size-sm);
+  border-radius: var(--uikit-radius-sm);
+}
+
+.button[data-size='md'] {
+  --uikit-button-icon-size: var(--uikit-button-icon-size-md);
+  height: var(--uikit-control-height-md);
+  min-width: var(--uikit-button-min-width-md);
+  padding-inline: var(--uikit-space-4);
+  gap: var(--uikit-space-1-5);
+  font-size: var(--uikit-font-size-sm);
+  border-radius: var(--uikit-radius-md);
+}
+
+.button[data-size='lg'] {
+  --uikit-button-icon-size: var(--uikit-button-icon-size-lg);
+  height: var(--uikit-control-height-lg);
+  min-width: var(--uikit-button-min-width-lg);
+  padding-inline: var(--uikit-space-5);
+  gap: var(--uikit-space-2);
+  font-size: var(--uikit-font-size-md);
+  border-radius: var(--uikit-radius-lg);
+}
+
+/* ---- variant ---- */
+
+.button[data-variant='solid'] {
+  background-color: var(--uikit-scheme-solid-bg);
+  color: var(--uikit-scheme-solid-fg);
+}
+
+.button[data-variant='solid']:hover:not([data-disabled]) {
+  background-color: var(--uikit-scheme-solid-bg-hover);
+}
+
+.button[data-variant='solid']:active:not([data-disabled]) {
+  background-color: var(--uikit-scheme-solid-bg-active);
+}
+
+.button[data-variant='outline'] {
+  background-color: transparent;
+  color: var(--uikit-scheme-outline-fg);
+  border-color: var(--uikit-scheme-outline-border);
+}
+
+.button[data-variant='outline']:hover:not([data-disabled]) {
+  background-color: var(--uikit-scheme-outline-bg-hover);
+}
+
+.button[data-variant='ghost'] {
+  background-color: transparent;
+  color: var(--uikit-scheme-ghost-fg);
+}
+
+.button[data-variant='ghost']:hover:not([data-disabled]) {
+  background-color: var(--uikit-scheme-ghost-bg-hover);
+}
+
+/* link는 인라인 텍스트처럼 흐르므로 크기 규칙 대부분을 되돌린다 */
+.button[data-variant='link'] {
+  height: auto;
+  min-width: 0;
+  padding-inline: 0;
+  background-color: transparent;
+  color: var(--uikit-scheme-ghost-fg);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.button[data-variant='link']:hover:not([data-disabled]) {
+  text-decoration-thickness: 2px;
+}
+
+/* ---- state ---- */
+
+.button[data-disabled] {
+  cursor: not-allowed;
+  color: var(--uikit-color-disabled-fg);
+}
+
+.button[data-variant='solid'][data-disabled] {
+  background-color: var(--uikit-color-disabled-bg);
+  border-color: transparent;
+}
+
+.button[data-variant='outline'][data-disabled] {
+  background-color: transparent;
+  border-color: var(--uikit-color-disabled-border);
+}
+
+.button[data-variant='ghost'][data-disabled],
+.button[data-variant='link'][data-disabled] {
+  background-color: transparent;
+}
+
+.button[data-full-width] {
+  width: 100%;
+  min-width: 0;
+}
+
+/* ---- loading ---- */
+
+.spinner {
+  width: var(--uikit-button-icon-size);
+  height: var(--uikit-button-icon-size);
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: var(--uikit-radius-full);
+  flex-shrink: 0;
+  animation: uikit-button-spin var(--uikit-duration-spin) linear infinite;
+}
+
+@keyframes uikit-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
