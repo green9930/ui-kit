@@ -15,6 +15,6 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["src", ".storybook"],
+  "include": ["src", ".storybook", "vitest.setup.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

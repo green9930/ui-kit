@@ -77,6 +77,25 @@ describe('Slot', () => {
     expect(fnRef).toHaveBeenCalledWith(expect.any(HTMLButtonElement))
   })
 
+  it('runs a returned ref cleanup on unmount and still nulls out a sibling ref', () => {
+    const cleanup = vi.fn()
+    const childRef = (node: HTMLButtonElement | null) => {
+      if (node) return cleanup
+    }
+    const slotRef = createRef<HTMLButtonElement>()
+    const { unmount } = render(
+      <Slot ref={slotRef}>
+        <button ref={childRef}>확인</button>
+      </Slot>,
+    )
+    expect(slotRef.current).toBeInstanceOf(HTMLButtonElement)
+
+    unmount()
+
+    expect(cleanup).toHaveBeenCalledTimes(1)
+    expect(slotRef.current).toBeNull()
+  })
+
   it('returns null when the child is not a valid element', () => {
     const { container } = render(<Slot>그냥 문자열</Slot>)
     expect(container).toBeEmptyDOMElement()
