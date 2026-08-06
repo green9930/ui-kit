@@ -1,4 +1,13 @@
-import { forwardRef, type ButtonHTMLAttributes, type ElementType } from 'react'
+import {
+  cloneElement,
+  forwardRef,
+  isValidElement,
+  type ButtonHTMLAttributes,
+  type ElementType,
+  type MouseEvent,
+  type ReactElement,
+  type ReactNode,
+} from 'react'
 import { cx } from '../../utils/cx'
 import { Slot } from '../../utils/Slot'
 import type { ColorScheme, Size, Variant } from '../../types'
@@ -50,18 +59,50 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     ? {}
     : { type: type ?? 'button', disabled: isDisabled }
 
-  // Slot(asChild)은 children으로 정확히 하나의 ReactElement만 받아야 한다.
-  // `{spinner}{children}`처럼 JSX에 두 개의 형제 표현식을 나열하면, 로딩이
-  // 아니어도 createElement가 [null, children] 배열을 children prop으로
-  // 넘겨 isValidElement 검사가 깨진다. 따라서 항상 단일 값으로 합친다.
-  const content = isLoading ? (
-    <>
-      <span className={styles.spinner} aria-hidden="true" />
-      {children}
-    </>
-  ) : (
-    children
-  )
+  // asChild + 명시적 disabled일 때는 button의 disabled 속성을 쓸 수 없다(자식이 button이
+  // 아닐 수 있으므로). aria-disabled는 스크린리더에만 알릴 뿐 클릭/키보드 활성화를
+  // 막지 않으므로, 탭 순서에서 빼고 capture 단계에서 클릭 자체를 삼켜 자식 자신의
+  // 핸들러와 소비자가 넘긴 onClick 모두를 막는다. isLoading 단독으로는 막지 않는다
+  // (asChild + isLoading 조합은 여전히 클릭 가능해야 한다 — 로딩 표시는 시각적 상태일
+  // 뿐 상호작용을 끄는 것은 명시적 disabled의 역할이다).
+  // pointer-events는 건드리지 않는다 — Tooltip이 비활성 버튼 위에 붙을 수 있어야 한다.
+  const disabledAsChildProps =
+    asChild && disabled
+      ? {
+          tabIndex: -1,
+          onClickCapture: (event: MouseEvent) => {
+            event.preventDefault()
+            event.stopPropagation()
+          },
+        }
+      : {}
+
+  const spinner = isLoading ? (
+    <span className={styles.spinner} aria-hidden="true" />
+  ) : null
+
+  // Slot(asChild)은 children으로 정확히 하나의 ReactElement를 받아야 클론할 수 있다.
+  // isLoading일 때 무조건 Fragment로 감싸면 asChild 경로에서 Slot이 Fragment를
+  // 클론하게 되고, React는 Fragment에 children 이외의 prop을 전부 버린다 — 그
+  // 결과 자식의 class, data-*, ref, onClick이 전부 사라지고 console에 "Invalid
+  // prop supplied to React.Fragment" 경고가 뜬다. 그래서 asChild + isLoading일
+  // 때는 스피너를 자식 "안쪽"에 주입해 자식 자체를 여전히 단일 엘리먼트로 유지한다.
+  let content: ReactNode
+  if (asChild) {
+    if (isLoading && isValidElement(children)) {
+      const child = children as ReactElement<{ children?: ReactNode }>
+      content = cloneElement(child, undefined, spinner, child.props.children)
+    } else {
+      content = children
+    }
+  } else {
+    content = (
+      <>
+        {spinner}
+        {children}
+      </>
+    )
+  }
 
   return (
     <Component
@@ -76,6 +117,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       aria-disabled={asChild && isDisabled ? true : undefined}
       {...buttonOnlyProps}
       {...rest}
+      {...disabledAsChildProps}
     >
       {content}
     </Component>

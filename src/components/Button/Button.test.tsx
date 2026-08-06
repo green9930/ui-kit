@@ -114,4 +114,68 @@ describe('Button', () => {
     render(<Button fullWidth>저장</Button>)
     expect(screen.getByRole('button')).toHaveAttribute('data-full-width', 'true')
   })
+
+  it('keeps the child intact and injects the spinner inside it when asChild and isLoading are combined', () => {
+    render(
+      <Button asChild isLoading colorScheme="secondary">
+        <a href="/next">이동</a>
+      </Button>,
+    )
+    const link = screen.getByRole('link', { name: '이동' })
+    expect(link).toHaveAttribute('data-scheme', 'secondary')
+    expect(link).toHaveAttribute('data-variant', 'solid')
+    expect(link.querySelector('[aria-hidden="true"]')).not.toBeNull()
+  })
+
+  it('forwards ref and still fires onClick when asChild and isLoading are combined, without a React warning', async () => {
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const user = userEvent.setup()
+    const ref = createRef<HTMLButtonElement>()
+    const onClick = vi.fn()
+    render(
+      <Button asChild isLoading ref={ref} onClick={onClick}>
+        <a href="/next">이동</a>
+      </Button>,
+    )
+    expect(ref.current).toBeInstanceOf(HTMLAnchorElement)
+    await user.click(screen.getByRole('link'))
+    expect(onClick).toHaveBeenCalledTimes(1)
+    expect(consoleError).not.toHaveBeenCalled()
+    consoleError.mockRestore()
+  })
+
+  it('does not fire the consumer onClick on a disabled asChild anchor', async () => {
+    const user = userEvent.setup()
+    const onClick = vi.fn()
+    render(
+      <Button asChild disabled onClick={onClick}>
+        <a href="/next">이동</a>
+      </Button>,
+    )
+    await user.click(screen.getByRole('link'))
+    expect(onClick).not.toHaveBeenCalled()
+  })
+
+  it('does not fire a handler declared on the child itself when disabled via asChild', async () => {
+    const user = userEvent.setup()
+    const childOnClick = vi.fn()
+    render(
+      <Button asChild disabled>
+        <a href="/next" onClick={childOnClick}>
+          이동
+        </a>
+      </Button>,
+    )
+    await user.click(screen.getByRole('link'))
+    expect(childOnClick).not.toHaveBeenCalled()
+  })
+
+  it('removes a disabled asChild anchor from the tab order', () => {
+    render(
+      <Button asChild disabled>
+        <a href="/next">이동</a>
+      </Button>,
+    )
+    expect(screen.getByRole('link')).toHaveAttribute('tabindex', '-1')
+  })
 })
