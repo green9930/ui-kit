@@ -1,8 +1,27 @@
 {
   "name": "@green9930/ui-kit",
   "version": "0.0.0",
-  "description": "React UI component kit",
+  "description": "Zero-dependency React UI component kit with CSS-variable theming, className overrides, and asChild — works with any styling stack.",
+  "keywords": [
+    "react",
+    "ui",
+    "components",
+    "design-system",
+    "ui-kit",
+    "css-modules",
+    "typescript",
+    "tailwind"
+  ],
   "license": "MIT",
+  "author": "green9930",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/green9930/ui-kit.git"
+  },
+  "homepage": "https://github.com/green9930/ui-kit#readme",
+  "bugs": {
+    "url": "https://github.com/green9930/ui-kit/issues"
+  },
   "type": "module",
   "sideEffects": [
     "*.css"
