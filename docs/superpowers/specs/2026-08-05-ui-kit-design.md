@@ -35,7 +35,7 @@
 
 이 레이어가 성립하려면 **컴포넌트 CSS에 하드코딩된 값이 하나도 없어야 한다**. 색상, 간격, radius, 폰트 크기, 그림자, transition 전부 토큰 변수를 참조한다. 이 규칙을 어기면 해당 속성만 소비자가 테마로 바꿀 수 없게 되고, 나중에 발견하기 어렵다.
 
-예외는 breakpoint 하나뿐이다 (아래 참조).
+예외가 두 가지 있다. breakpoint는 미디어쿼리가 `var()`를 읽지 못해 토큰이 될 수 없고, `font-family`는 토큰 외에 소비자의 일반 CSS 선택자로도 덮어쓸 수 있도록 specificity를 일부러 0으로 낮춘다. 둘 다 아래에서 자세히 다룬다.
 
 ### 레이어 2 — className (개별 조정)
 
@@ -62,22 +62,22 @@
 
 각 스킴은 50~900의 10단계 스케일을 갖는다. 값은 대비 검증이 된 공개 팔레트(Tailwind의 slate/blue/red/amber/green)를 기준으로 삼았다. 색상 자체가 이 프로젝트의 차별점이 아니고, 접근성 대비가 이미 검증된 값을 쓰는 편이 안전하다.
 
-| 스텝 | gray | primary | danger | warning | success |
-|---|---|---|---|---|---|
-| 50 | `#F8FAFC` | `#EFF6FF` | `#FEF2F2` | `#FFFBEB` | `#F0FDF4` |
-| 100 | `#F1F5F9` | `#DBEAFE` | `#FEE2E2` | `#FEF3C7` | `#DCFCE7` |
-| 200 | `#E2E8F0` | `#BFDBFE` | `#FECACA` | `#FDE68A` | `#BBF7D0` |
-| 300 | `#CBD5E1` | `#93C5FD` | `#FCA5A5` | `#FCD34D` | `#86EFAC` |
-| 400 | `#94A3B8` | `#60A5FA` | `#F87171` | `#FBBF24` | `#4ADE80` |
-| 500 | `#64748B` | `#3B82F6` | `#EF4444` | `#F59E0B` | `#22C55E` |
-| 600 | `#475569` | `#2563EB` | `#DC2626` | `#D97706` | `#16A34A` |
-| 700 | `#334155` | `#1D4ED8` | `#B91C1C` | `#B45309` | `#15803D` |
-| 800 | `#1E293B` | `#1E40AF` | `#991B1B` | `#92400E` | `#166534` |
-| 900 | `#0F172A` | `#1E3A8A` | `#7F1D1D` | `#78350F` | `#14532D` |
+| 스텝 | gray | primary | secondary | danger | warning | success |
+|---|---|---|---|---|---|---|
+| 50 | `#F8FAFC` | `#EFF6FF` | `#F5F3FF` | `#FEF2F2` | `#FFFBEB` | `#F0FDF4` |
+| 100 | `#F1F5F9` | `#DBEAFE` | `#EDE9FE` | `#FEE2E2` | `#FEF3C7` | `#DCFCE7` |
+| 200 | `#E2E8F0` | `#BFDBFE` | `#DDD6FE` | `#FECACA` | `#FDE68A` | `#BBF7D0` |
+| 300 | `#CBD5E1` | `#93C5FD` | `#C4B5FD` | `#FCA5A5` | `#FCD34D` | `#86EFAC` |
+| 400 | `#94A3B8` | `#60A5FA` | `#A78BFA` | `#F87171` | `#FBBF24` | `#4ADE80` |
+| 500 | `#64748B` | `#3B82F6` | `#8B5CF6` | `#EF4444` | `#F59E0B` | `#22C55E` |
+| 600 | `#475569` | `#2563EB` | `#7C3AED` | `#DC2626` | `#D97706` | `#16A34A` |
+| 700 | `#334155` | `#1D4ED8` | `#6D28D9` | `#B91C1C` | `#B45309` | `#15803D` |
+| 800 | `#1E293B` | `#1E40AF` | `#5B21B6` | `#991B1B` | `#92400E` | `#166534` |
+| 900 | `#0F172A` | `#1E3A8A` | `#4C1D95` | `#7F1D1D` | `#78350F` | `#14532D` |
 
-`secondary`는 별도 hue를 만들지 않고 `gray` 스케일에 매핑한다. 중립적인 대안 액션이라는 의미에 맞고, 관리할 팔레트가 하나 줄어든다.
+`secondary`는 violet 계열의 독립 팔레트다. primary blue와 확실히 구분되면서 danger/warning/success 어느 것과도 겹치지 않는다. `gray`는 팔레트로만 존재하고 colorScheme으로는 노출하지 않는다.
 
-**solid 배경의 대비 처리** — 스킴마다 흰 텍스트로 4.5:1을 넘기는 스텝이 다르다. primary와 danger는 600, success는 700을 solid 배경으로 쓴다. warning은 어떤 스텝에서도 흰 텍스트가 대비를 만족하지 못하므로 **solid 전경색을 `gray-900`으로 둔다**. 이 차이는 스킴 슬롯(아래)에서 흡수되므로 컴포넌트는 신경 쓰지 않는다.
+**solid 배경의 대비 처리** — 스킴마다 흰 텍스트로 4.5:1을 넘기는 스텝이 다르다. primary, secondary, danger는 600, success는 700을 solid 배경으로 쓴다. warning은 어떤 스텝에서도 흰 텍스트가 대비를 만족하지 못하므로 **solid 전경색을 `gray-900`으로 둔다**. 이 차이는 스킴 슬롯(아래)에서 흡수되므로 컴포넌트는 신경 쓰지 않는다.
 
 ### 시맨틱 별칭 (라이트/다크 대응)
 
@@ -134,7 +134,33 @@
 --uikit-font-family-mono: 'SF Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace
 ```
 
-폰트 파일은 번들하지 않는다. 시스템 스택으로 두고 소비자가 `--uikit-font-family`를 덮어쓴다. 한글 폰트가 흔히 쓰이는 환경이라 Pretendard와 Apple SD Gothic Neo를 폴백에 포함하되, 설치되어 있지 않으면 자연스럽게 다음 폰트로 넘어간다.
+폰트 파일은 번들하지 않는다. 시스템 스택으로 두고 소비자가 덮어쓴다. 한글 폰트가 흔히 쓰이는 환경이라 Pretendard와 Apple SD Gothic Neo를 폴백에 포함하되, 설치되어 있지 않으면 자연스럽게 다음 폰트로 넘어간다.
+
+#### font-family는 소비자 선택자에 양보한다
+
+폰트는 소비자가 프로젝트 전역 CSS에서 바꾸려는 빈도가 가장 높은 속성이다. 기본 설계대로 컴포넌트 클래스에 선언하면 CSS Modules 해시 클래스가 `(0,1,0)`이라, 소비자의 `button { font-family: ... }`(`(0,0,1)`)를 로드 순서와 무관하게 눌러버린다.
+
+**font-family 선언만 `:where()`로 감싼다.** `:where()`는 항상 specificity가 `(0,0,0)`이므로 소비자의 어떤 선택자에도 진다.
+
+```css
+:where(.button, .input, .textarea, .select) {
+  font-family: var(--uikit-font-family, inherit);
+}
+```
+
+이로써 소비자의 세 가지 경로가 모두 의도대로 동작한다.
+
+```css
+:root { --uikit-font-family: 'Pretendard'; }   /* 토큰 — 정식 경로 */
+button { font-family: 'Pretendard'; }          /* 타입 선택자 (0,0,1) > (0,0,0) */
+:root { --uikit-font-family: inherit; }        /* body 상속에 위임 */
+```
+
+`inherit`을 명시적으로 선언하는 이유는 브라우저 UA 스타일시트가 `button`, `input`, `select`, `textarea`에 `font: 400 13.333px Arial`을 강제하기 때문이다. 이 4개 요소는 선언하지 않으면 `body` 폰트를 상속받지 못한다.
+
+**`:where()`는 font-family에만 적용한다.** `font-size`까지 열면 소비자의 `button { font-size: 14px }`가 `size` 변형을 통째로 무력화한다. `size`는 컴포넌트 API의 핵심 축이라 그 정도로 쉽게 뚫리면 안 된다. 색상·간격은 토큰과 `className`을 정식 경로로 두고 일반 specificity를 유지한다.
+
+소비자가 `* { font-family: ... }`처럼 전체 선택자를 쓰면 `(0,0,0)`으로 동점이 되어 로드 순서가 결정한다. 이 경우만 예측이 어려우므로 README에 명시한다.
 
 크기는 `rem` 기준이다. 사용자가 브라우저 기본 글자 크기를 키웠을 때 따라 커져야 하므로 `px`를 쓰지 않는다.
 
