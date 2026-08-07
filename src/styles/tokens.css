@@ -91,9 +91,9 @@
   --uikit-button-min-width-sm: 64px;
   --uikit-button-min-width-md: 80px;
   --uikit-button-min-width-lg: 96px;
-  --uikit-button-icon-size-sm: 14px;
-  --uikit-button-icon-size-md: 16px;
-  --uikit-button-icon-size-lg: 18px;
+  --uikit-button-icon-size-sm: 12px;
+  --uikit-button-icon-size-md: 14px;
+  --uikit-button-icon-size-lg: 16px;
 }
 
 @media (prefers-reduced-motion: reduce) {
