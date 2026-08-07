@@ -1,0 +1,216 @@
+/* font-family만 specificity 0으로 낮춰 소비자의 `button { font-family: ... }`에 양보한다 */
+:where(.button) {
+  font-family: var(--uikit-font-family, inherit);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: var(--uikit-border-width-thin) solid transparent;
+  font-weight: var(--uikit-font-weight-medium);
+  line-height: var(--uikit-line-height-tight);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--uikit-duration-fast) var(--uikit-ease-out),
+    border-color var(--uikit-duration-fast) var(--uikit-ease-out),
+    color var(--uikit-duration-fast) var(--uikit-ease-out);
+}
+
+/*
+ * 아래부터는 전부 `.button` 뒤에 오는 조건(attribute selector, :hover/:active,
+ * :not())을 `:where()`로 감싸 specificity를 (0,1,0)으로 고정한다. `.button[data-size='md']`
+ * 처럼 그대로 두면 (0,2,0)이 되어 소비자의 단일 class(`.my-cta`, Tailwind 유틸리티 등,
+ * (0,1,0))가 로드 순서와 무관하게 항상 진다 — Layer 2(className)의 전제가 깨진다.
+ * `:where()` 내부의 selector list, `:not()`, `:hover`/`:active`는 몇 개를 겹쳐도
+ * specificity에 0을 더할 뿐이므로, `.button` 자신의 (0,1,0)만 남는다.
+ * 단, `:where(.button)`처럼 `.button` 자체를 감싸는 것과는 다르다 — 그러면 (0,0,0)이 되어
+ * font-family에만 허용한 예외(소비자의 타입 선택자에도 양보)가 나머지 속성에도 퍼져버린다.
+ * 아래 규칙들은 전부 (0,1,0)으로 동일하므로, 내부 캐스케이드는 이제부터 소스 순서로
+ * 결정된다: size → variant(기본) → variant(hover/active) → disabled → link 예외 →
+ * fullWidth 순서를 유지해야 disabled와 link의 되돌림이 항상 이긴다.
+ */
+
+.button:where(:focus-visible) {
+  outline: 2px solid var(--uikit-scheme-focus-ring);
+  outline-offset: 2px;
+}
+
+:where(.button) > svg {
+  width: var(--uikit-button-icon-size);
+  height: var(--uikit-button-icon-size);
+  flex-shrink: 0;
+}
+
+/* ---- size ---- */
+
+.button:where([data-size='sm']) {
+  --uikit-button-icon-size: var(--uikit-button-icon-size-sm);
+  height: var(--uikit-control-height-sm);
+  min-width: var(--uikit-button-min-width-sm);
+  padding-inline: var(--uikit-space-3);
+  gap: var(--uikit-space-1);
+  font-size: var(--uikit-font-size-sm);
+  --uikit-button-radius: var(--uikit-radius-sm);
+  border-radius: var(--uikit-button-radius);
+}
+
+.button:where([data-size='md']) {
+  --uikit-button-icon-size: var(--uikit-button-icon-size-md);
+  height: var(--uikit-control-height-md);
+  min-width: var(--uikit-button-min-width-md);
+  padding-inline: var(--uikit-space-4);
+  gap: var(--uikit-space-1-5);
+  font-size: var(--uikit-font-size-sm);
+  --uikit-button-radius: var(--uikit-radius-md);
+  border-radius: var(--uikit-button-radius);
+}
+
+.button:where([data-size='lg']) {
+  --uikit-button-icon-size: var(--uikit-button-icon-size-lg);
+  height: var(--uikit-control-height-lg);
+  min-width: var(--uikit-button-min-width-lg);
+  padding-inline: var(--uikit-space-5);
+  gap: var(--uikit-space-2);
+  font-size: var(--uikit-font-size-md);
+  --uikit-button-radius: var(--uikit-radius-lg);
+  border-radius: var(--uikit-button-radius);
+}
+
+/* ---- variant ---- */
+
+.button:where([data-variant='solid']) {
+  position: relative;
+  background-color: var(--uikit-scheme-solid-bg);
+  color: var(--uikit-scheme-solid-fg);
+  /*
+   * --uikit-scheme-glow는 다크 스킴 블록에서만 정의된다. 라이트에서는 var()가 폴백으로
+   * 떨어져 그림자가 자동으로 꺼지므로 테마 분기가 필요 없다.
+   */
+  box-shadow: var(--uikit-scheme-glow, 0 0 #0000);
+}
+
+/*
+ * 가장자리에서 2px 안쪽에 그리는 불투명한 선. inset box-shadow로는 가장자리에 딱 붙는
+ * 선밖에 못 그려서 별도 레이어로 뺐다.
+ *
+ * inset이 1px인 이유: 절대 위치의 기준은 padding box인데, .button이 이미 1px 투명
+ * 테두리를 갖고 있어 padding box가 바깥 가장자리에서 1px 안쪽이다. 여기서 1px 더
+ * 들어가면 바깥 가장자리 기준 정확히 2px가 된다.
+ *
+ * radius도 안쪽으로 들어온 만큼 줄여야 모서리가 바깥 곡률과 평행하게 흐른다.
+ *
+ * 선 색은 면 색에서 출발해 글자색 쪽으로 조금만 이동시킨다. 글자색을 그대로 쓰면
+ * 면과 대비가 최대라 너무 튄다. 색을 섞는 방식이라 결과는 불투명하며, 라이트(어두운 면)
+ * 에서는 살짝 밝은 선, 다크(밝은 면)에서는 살짝 어두운 선이 되어 테마 분기가 필요 없다.
+ */
+.button:where([data-variant='solid'])::before {
+  content: '';
+  position: absolute;
+  inset: calc(2px - var(--uikit-border-width-thin));
+  border: var(--uikit-border-width-thin) solid
+    color-mix(in srgb, var(--uikit-scheme-solid-fg) var(--uikit-solid-ring-mix), var(--uikit-scheme-solid-bg));
+  border-radius: calc(var(--uikit-button-radius) - 2px);
+  pointer-events: none;
+}
+
+.button:where([data-variant='solid']:hover:not([data-disabled])) {
+  background-color: var(--uikit-scheme-solid-bg-hover);
+}
+
+.button:where([data-variant='solid']:active:not([data-disabled])) {
+  background-color: var(--uikit-scheme-solid-bg-active);
+}
+
+.button:where([data-variant='outline']) {
+  background-color: transparent;
+  color: var(--uikit-scheme-outline-fg);
+  border-color: var(--uikit-scheme-outline-border);
+}
+
+.button:where([data-variant='outline']:hover:not([data-disabled])) {
+  background-color: var(--uikit-scheme-outline-bg-hover);
+}
+
+.button:where([data-variant='ghost']) {
+  background-color: transparent;
+  color: var(--uikit-scheme-ghost-fg);
+}
+
+.button:where([data-variant='ghost']:hover:not([data-disabled])) {
+  background-color: var(--uikit-scheme-ghost-bg-hover);
+}
+
+/* link는 인라인 텍스트처럼 흐르므로 크기 규칙 대부분을 되돌린다.
+   border-width도 0으로 되돌린다 — 기본 .button의 1px solid transparent가
+   box-sizing: border-box 아래에서도 실제 레이아웃 치수(2px)를 차지해, 투명해도
+   링크 variant를 주변 인라인 텍스트보다 2px 더 크게 만든다. */
+.button:where([data-variant='link']) {
+  height: auto;
+  min-width: 0;
+  /* 인라인 텍스트처럼 흐르되 클릭 영역이 글자에 딱 붙지 않도록 최소 여백만 둔다 */
+  padding-inline: var(--uikit-space-1);
+  border-width: 0;
+  background-color: transparent;
+  color: var(--uikit-scheme-ghost-fg);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.button:where([data-variant='link']:hover:not([data-disabled])) {
+  text-decoration-thickness: 2px;
+}
+
+/* ---- state ---- */
+
+.button:where([data-disabled]) {
+  cursor: not-allowed;
+  color: var(--uikit-color-disabled-fg);
+}
+
+.button:where([data-variant='solid'][data-disabled]) {
+  background-color: var(--uikit-color-disabled-bg);
+  border-color: transparent;
+  /* 비활성 버튼이 발광하면 안 된다 */
+  box-shadow: none;
+}
+
+/* 비활성 상태에서는 안쪽 선도 지운다 */
+.button:where([data-variant='solid'][data-disabled])::before {
+  border-color: transparent;
+}
+
+.button:where([data-variant='outline'][data-disabled]) {
+  background-color: transparent;
+  border-color: var(--uikit-color-disabled-border);
+}
+
+.button:where([data-variant='ghost'][data-disabled], [data-variant='link'][data-disabled]) {
+  background-color: transparent;
+}
+
+.button:where([data-full-width]) {
+  width: 100%;
+  min-width: 0;
+}
+
+/* ---- loading ---- */
+
+.spinner {
+  width: var(--uikit-button-icon-size);
+  height: var(--uikit-button-icon-size);
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: var(--uikit-radius-full);
+  flex-shrink: 0;
+  animation: uikit-button-spin var(--uikit-duration-spin) linear infinite;
+}
+
+@keyframes uikit-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,43 @@
+/*
+ * --uikit-color-focus-ring는 여기서 정의하지 않는다. Button을 포함해 지금까지 나온
+ * 컴포넌트는 전부 colorScheme을 갖고, 포커스 링도 스킴에 맞춰 색이 바뀌어야 하므로
+ * schemes.css의 --uikit-scheme-focus-ring(스킴별 슬롯, light/dark 모두 정의됨)만
+ * 참조한다. 이 전역 별칭을 같이 두면 아무도 읽지 않는 죽은 토큰이 되어(소비자가
+ * 덮어써도 아무 효과가 없는) 함정이 되므로 뺐다. colorScheme이 없는 컴포넌트가
+ * 나오면(예: 순수 레이아웃 컨테이너) 그때 이 별칭을 다시 추가하고 실제로 참조한다.
+ */
+:where(:root) {
+  --uikit-color-bg: #ffffff;
+  --uikit-color-surface: #ffffff;
+  --uikit-color-surface-subtle: var(--uikit-color-gray-50);
+  --uikit-color-fg: var(--uikit-color-gray-900);
+  --uikit-color-fg-muted: var(--uikit-color-gray-500);
+  --uikit-color-border: var(--uikit-color-gray-200);
+  --uikit-color-border-strong: var(--uikit-color-gray-300);
+  --uikit-color-disabled-bg: var(--uikit-color-gray-100);
+  --uikit-color-disabled-fg: var(--uikit-color-gray-400);
+  --uikit-color-disabled-border: var(--uikit-color-gray-200);
+
+  --uikit-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.05);
+  --uikit-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --uikit-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --uikit-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+:where([data-theme='dark']) {
+  --uikit-color-bg: var(--uikit-color-gray-900);
+  --uikit-color-surface: var(--uikit-color-gray-800);
+  --uikit-color-surface-subtle: var(--uikit-color-gray-800);
+  --uikit-color-fg: var(--uikit-color-gray-50);
+  --uikit-color-fg-muted: var(--uikit-color-gray-400);
+  --uikit-color-border: var(--uikit-color-gray-700);
+  --uikit-color-border-strong: var(--uikit-color-gray-600);
+  --uikit-color-disabled-bg: var(--uikit-color-gray-800);
+  --uikit-color-disabled-fg: var(--uikit-color-gray-600);
+  --uikit-color-disabled-border: var(--uikit-color-gray-700);
+
+  --uikit-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --uikit-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.5);
+  --uikit-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.55), 0 4px 6px -4px rgb(0 0 0 / 0.55);
+  --uikit-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.6), 0 8px 10px -6px rgb(0 0 0 / 0.6);
+}

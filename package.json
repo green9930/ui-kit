@@ -1,0 +1,80 @@
+{
+  "name": "@green9930/ui-kit",
+  "version": "0.0.0",
+  "description": "Zero-dependency React UI component kit with CSS-variable theming, className overrides, and asChild — works with any styling stack.",
+  "keywords": [
+    "react",
+    "ui",
+    "components",
+    "design-system",
+    "ui-kit",
+    "css-modules",
+    "typescript",
+    "tailwind"
+  ],
+  "license": "MIT",
+  "author": "green9930",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/green9930/ui-kit.git"
+  },
+  "homepage": "https://github.com/green9930/ui-kit#readme",
+  "bugs": {
+    "url": "https://github.com/green9930/ui-kit/issues"
+  },
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "packageManager": "pnpm@9.2.0",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsc --noEmit && vite build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "prepublishOnly": "pnpm build && pnpm test"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@csstools/postcss-global-data": "^4.0.0",
+    "@storybook/addon-a11y": "^10.5.6",
+    "@storybook/addon-docs": "^10.5.6",
+    "@storybook/react-vite": "^10.5.6",
+    "@testing-library/jest-dom": "^7.0.0",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.3",
+    "@types/node": "^26.1.2",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^6.0.5",
+    "glob": "^13.0.6",
+    "jsdom": "^30.0.1",
+    "postcss": "^8.5.25",
+    "postcss-custom-media": "^12.0.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "storybook": "^10.5.6",
+    "typescript": "^6.0.3",
+    "vite": "^8.2.0",
+    "vite-plugin-dts": "^5.0.3",
+    "vite-plugin-lib-inject-css": "^2.2.2",
+    "vitest": "^4.1.10"
+  }
+}

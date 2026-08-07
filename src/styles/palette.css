@@ -1,0 +1,67 @@
+:where(:root) {
+  --uikit-color-gray-50: #f8fafc;
+  --uikit-color-gray-100: #f1f5f9;
+  --uikit-color-gray-200: #e2e8f0;
+  --uikit-color-gray-300: #cbd5e1;
+  --uikit-color-gray-400: #94a3b8;
+  --uikit-color-gray-500: #64748b;
+  --uikit-color-gray-600: #475569;
+  --uikit-color-gray-700: #334155;
+  --uikit-color-gray-800: #1e293b;
+  --uikit-color-gray-900: #0f172a;
+
+  --uikit-color-primary-50: #f1f7f7;
+  --uikit-color-primary-100: #d5f1f1;
+  --uikit-color-primary-200: #9aeaec;
+  --uikit-color-primary-300: #62d6de;
+  --uikit-color-primary-400: #19b9ca;
+  --uikit-color-primary-500: #009ab1;
+  --uikit-color-primary-600: #007d99;
+  --uikit-color-primary-700: #0a6689;
+  --uikit-color-primary-800: #165078;
+  --uikit-color-primary-900: #1f3d68;
+
+  --uikit-color-secondary-50: #f3f7f0;
+  --uikit-color-secondary-100: #def3cb;
+  --uikit-color-secondary-200: #bcec81;
+  --uikit-color-secondary-300: #a0d73e;
+  --uikit-color-secondary-400: #89b700;
+  --uikit-color-secondary-500: #759800;
+  --uikit-color-secondary-600: #627c00;
+  --uikit-color-secondary-700: #546701;
+  --uikit-color-secondary-800: #465209;
+  --uikit-color-secondary-900: #3a4212;
+
+  --uikit-color-danger-50: #fef2f2;
+  --uikit-color-danger-100: #fee2e2;
+  --uikit-color-danger-200: #fecaca;
+  --uikit-color-danger-300: #fca5a5;
+  --uikit-color-danger-400: #f87171;
+  --uikit-color-danger-500: #ef4444;
+  --uikit-color-danger-600: #dc2626;
+  --uikit-color-danger-700: #b91c1c;
+  --uikit-color-danger-800: #991b1b;
+  --uikit-color-danger-900: #7f1d1d;
+
+  --uikit-color-warning-50: #fffbeb;
+  --uikit-color-warning-100: #fef3c7;
+  --uikit-color-warning-200: #fde68a;
+  --uikit-color-warning-300: #fcd34d;
+  --uikit-color-warning-400: #fbbf24;
+  --uikit-color-warning-500: #f59e0b;
+  --uikit-color-warning-600: #d97706;
+  --uikit-color-warning-700: #b45309;
+  --uikit-color-warning-800: #92400e;
+  --uikit-color-warning-900: #78350f;
+
+  --uikit-color-success-50: #f0fdf4;
+  --uikit-color-success-100: #dcfce7;
+  --uikit-color-success-200: #bbf7d0;
+  --uikit-color-success-300: #86efac;
+  --uikit-color-success-400: #4ade80;
+  --uikit-color-success-500: #22c55e;
+  --uikit-color-success-600: #16a34a;
+  --uikit-color-success-700: #15803d;
+  --uikit-color-success-800: #166534;
+  --uikit-color-success-900: #14532d;
+}

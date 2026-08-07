@@ -1,0 +1,7 @@
+:where(:root) {
+  color-scheme: light;
+}
+
+:where([data-theme='dark']) {
+  color-scheme: dark;
+}
