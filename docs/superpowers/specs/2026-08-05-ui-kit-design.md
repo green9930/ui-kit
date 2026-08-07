@@ -60,26 +60,35 @@
 
 ### 색상 팔레트
 
-각 스킴은 50~900의 10단계 스케일을 갖는다. gray/secondary/danger/warning/success는 대비 검증이 된 공개 팔레트(Tailwind의 slate/violet/red/amber/green)를 기준으로 삼았다.
+각 스킴은 50~900의 10단계 스케일을 갖는다. gray/danger/warning/success는 대비 검증이 된 공개 팔레트(Tailwind의 slate/red/amber/green)를 기준으로 삼았다.
 
-`primary`만 별도로 만들었다. rune.team 테마의 블루 토큰(`--rn-blue #7DB4FF`, hsl(215°, 100%, 74%))을 기준점으로 잡고 hue 215°를 유지한 채 밝은 쪽은 채도를 살리고 어두운 쪽으로 갈수록 눌렀다. 400 스텝이 그 기준값과 거의 일치한다. 채도가 아니라 밝기로 존재감을 만드는 톤이라, 어두운 배경에서 발광하듯 보이면서도 소리치지 않는다.
+`primary`와 `secondary`는 OKLCH에서 직접 설계했다. 지각 균일 공간이라 밝기 계단과 채도 곡선을 의도대로 통제할 수 있고, sRGB 게멋 한계도 색상각·밝기별로 계산해 최대치를 쓸 수 있다.
+
+- **primary(청록)** — 색상각을 밝은 쪽 197°에서 어두운 쪽 254°로 흘린다. 눈에 실제로 보이는 300~600 구간을 청록으로 유지하고 800~900만 파랑으로 되돌리는 방식이다. 램프 전체를 청록으로 끌면 어두운 스텝의 채도 천장이 무너져 탁해진다.
+- **secondary(라임)** — 색상각 132°→118°. 청록의 보색축은 주황(41°)이지만 그쪽은 danger(27°)·warning(70°)과 붙어 있어 쓸 수 없다. 라임은 success(150°)와 20° 떨어져 있고, sRGB에서 밝은 구간의 채도 천장이 가장 높은 색 계열이라 여지가 크다.
+
+**채도 정점은 primary 0.120, secondary 0.186이다.** 청록 계열은 sRGB에서 파랑·보라의 절반 수준까지만 진해진다. 색공간의 물리적 한계이며 설계로 넘을 수 없다.
 
 | 스텝 | gray | primary | secondary | danger | warning | success |
 |---|---|---|---|---|---|---|
-| 50 | `#F8FAFC` | `#F0F6FF` | `#F5F3FF` | `#FEF2F2` | `#FFFBEB` | `#F0FDF4` |
-| 100 | `#F1F5F9` | `#DBEAFF` | `#EDE9FE` | `#FEE2E2` | `#FEF3C7` | `#DCFCE7` |
-| 200 | `#E2E8F0` | `#BDD8FF` | `#DDD6FE` | `#FECACA` | `#FDE68A` | `#BBF7D0` |
-| 300 | `#CBD5E1` | `#94C1FF` | `#C4B5FD` | `#FCA5A5` | `#FCD34D` | `#86EFAC` |
-| 400 | `#94A3B8` | `#7AB2FF` | `#A78BFA` | `#F87171` | `#FBBF24` | `#4ADE80` |
-| 500 | `#64748B` | `#5093F1` | `#8B5CF6` | `#EF4444` | `#F59E0B` | `#22C55E` |
-| 600 | `#475569` | `#1A66D1` | `#7C3AED` | `#DC2626` | `#D97706` | `#16A34A` |
-| 700 | `#334155` | `#1354AE` | `#6D28D9` | `#B91C1C` | `#B45309` | `#15803D` |
-| 800 | `#1E293B` | `#114388` | `#5B21B6` | `#991B1B` | `#92400E` | `#166534` |
-| 900 | `#0F172A` | `#123464` | `#4C1D95` | `#7F1D1D` | `#78350F` | `#14532D` |
+| 50 | `#F8FAFC` | `#F1F7F7` | `#F3F7F0` | `#FEF2F2` | `#FFFBEB` | `#F0FDF4` |
+| 100 | `#F1F5F9` | `#D5F1F1` | `#DEF3CB` | `#FEE2E2` | `#FEF3C7` | `#DCFCE7` |
+| 200 | `#E2E8F0` | `#9AEAEC` | `#BCEC81` | `#FECACA` | `#FDE68A` | `#BBF7D0` |
+| 300 | `#CBD5E1` | `#62D6DE` | `#A0D73E` | `#FCA5A5` | `#FCD34D` | `#86EFAC` |
+| 400 | `#94A3B8` | `#19B9CA` | `#89B700` | `#F87171` | `#FBBF24` | `#4ADE80` |
+| 500 | `#64748B` | `#009AB1` | `#759800` | `#EF4444` | `#F59E0B` | `#22C55E` |
+| 600 | `#475569` | `#007D99` | `#627C00` | `#DC2626` | `#D97706` | `#16A34A` |
+| 700 | `#334155` | `#0A6689` | `#546701` | `#B91C1C` | `#B45309` | `#15803D` |
+| 800 | `#1E293B` | `#165078` | `#465209` | `#991B1B` | `#92400E` | `#166534` |
+| 900 | `#0F172A` | `#1F3D68` | `#3A4212` | `#7F1D1D` | `#78350F` | `#14532D` |
 
-`secondary`는 violet 계열의 독립 팔레트다. primary blue와 확실히 구분되면서 danger/warning/success 어느 것과도 겹치지 않는다. `gray`는 팔레트로만 존재하고 colorScheme으로는 노출하지 않는다.
+`gray`는 팔레트로만 존재하고 colorScheme으로는 노출하지 않는다.
 
-**solid 배경의 대비 처리** — 스킴마다 흰 텍스트로 4.5:1을 넘기는 스텝이 다르다. primary, secondary, danger는 600, success는 700을 solid 배경으로 쓴다. warning은 어떤 스텝에서도 흰 텍스트가 대비를 만족하지 못하므로 **solid 전경색을 `gray-900`으로 둔다**. 이 차이는 스킴 슬롯(아래)에서 흡수되므로 컴포넌트는 신경 쓰지 않는다.
+**solid 배경 스텝** — 라이트에서 danger는 600, success는 700, warning은 500을 쓴다. warning은 어떤 스텝에서도 흰 텍스트가 대비를 만족하지 못하므로 **solid 전경색을 `gray-900`으로 둔다**. primary와 secondary는 500을 쓴다 — 600은 채도가 바닥이라 탁해 보인다.
+
+**다크에서는 solid를 반전한다.** 밝은 스텝(primary·secondary 400, danger·success 500)을 면으로 쓴다. 어두운 페이지에서 면이 발광하듯 보이는 패턴이다. `--uikit-scheme-glow`가 외곽 광을 더하며, 이 토큰은 다크 블록에서만 정의되므로 라이트에서는 컴포넌트 쪽 `var()` 폴백이 걸려 자동으로 꺼진다.
+
+**접근성 — 의도적으로 감수한 미달이 있다.** solid 조합의 흰 텍스트 대비는 라이트 3.36:1, 다크 2.38:1로 WCAG AA(4.5:1)에 미달한다. 청록·라임 계열에서는 흰 텍스트가 통과하는 최대 채도가 0.096에 불과해(파랑 260°는 0.234), 선명함과 흰 글자를 동시에 가질 수 없다. 선명함을 택한 결과다. outline·ghost·link는 라이트 6.3~6.4:1, 다크 10.4:1로 모두 통과한다. 대비를 우선한다면 solid 전경색을 `gray-900`으로 바꾸면 라이트 5.3:1, 다크 7.5:1이 된다.
 
 ### 시맨틱 별칭 (라이트/다크 대응)
 
@@ -110,8 +119,8 @@
 
 /* 스킴 정의 — 슬롯에 팔레트를 주입한다 */
 [data-scheme="primary"] {
-  --uikit-scheme-solid-bg: var(--uikit-color-primary-600);
-  --uikit-scheme-solid-bg-hover: var(--uikit-color-primary-700);
+  --uikit-scheme-solid-bg: var(--uikit-color-primary-500);
+  --uikit-scheme-solid-bg-hover: var(--uikit-color-primary-600);
   --uikit-scheme-solid-fg: white;
   /* ... */
 }
@@ -123,7 +132,7 @@
 - subtle: `subtle-bg`, `subtle-bg-hover`, `subtle-fg`
 - outline: `outline-border`, `outline-fg`, `outline-bg-hover`
 - ghost: `ghost-fg`, `ghost-bg-hover`
-- 공통: `scheme-focus-ring`
+- 공통: `scheme-focus-ring`, `scheme-glow`(다크 전용)
 
 이 구조 덕에 새 colorScheme 추가가 CSS 블록 하나로 끝나고, 소비자도 자기 스킴을 정의해 쓸 수 있다.
 

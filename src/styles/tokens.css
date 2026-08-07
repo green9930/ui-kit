@@ -57,6 +57,11 @@
   --uikit-radius-full: 9999px;
 
   --uikit-border-width-thin: 1px;
+  /*
+   * solid 버튼 안쪽 선이 면 색에서 글자색 쪽으로 얼마나 이동할지. 0%면 면과 같아 보이지
+   * 않고, 100%면 글자색 그대로라 튄다. 투명도가 아니라 색을 섞는 것이라 선 자체는 불투명하다.
+   */
+  --uikit-solid-ring-mix: 22%;
   --uikit-border-width-thick: 2px;
 
   --uikit-z-base: 0;

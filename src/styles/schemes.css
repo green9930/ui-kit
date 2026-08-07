@@ -9,9 +9,10 @@
  * 모두 성립한다.
  */
 :where([data-scheme='primary']) {
-  --uikit-scheme-solid-bg: var(--uikit-color-primary-600);
-  --uikit-scheme-solid-bg-hover: var(--uikit-color-primary-700);
-  --uikit-scheme-solid-bg-active: var(--uikit-color-primary-800);
+  /* 라이트 solid 면은 500을 쓴다 — 600은 채도가 바닥이라 탁하다 */
+  --uikit-scheme-solid-bg: var(--uikit-color-primary-500);
+  --uikit-scheme-solid-bg-hover: var(--uikit-color-primary-600);
+  --uikit-scheme-solid-bg-active: var(--uikit-color-primary-700);
   --uikit-scheme-solid-fg: #ffffff;
   --uikit-scheme-subtle-bg: var(--uikit-color-primary-50);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-primary-100);
@@ -25,9 +26,10 @@
 }
 
 :where([data-scheme='secondary']) {
-  --uikit-scheme-solid-bg: var(--uikit-color-secondary-600);
-  --uikit-scheme-solid-bg-hover: var(--uikit-color-secondary-700);
-  --uikit-scheme-solid-bg-active: var(--uikit-color-secondary-800);
+  /* 라이트 solid 면은 500을 쓴다 — 600은 채도가 바닥이라 탁하다 */
+  --uikit-scheme-solid-bg: var(--uikit-color-secondary-500);
+  --uikit-scheme-solid-bg-hover: var(--uikit-color-secondary-600);
+  --uikit-scheme-solid-bg-active: var(--uikit-color-secondary-700);
   --uikit-scheme-solid-fg: #ffffff;
   --uikit-scheme-subtle-bg: var(--uikit-color-secondary-50);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-secondary-100);
@@ -108,7 +110,7 @@
   --uikit-scheme-solid-bg: var(--uikit-color-primary-400);
   --uikit-scheme-solid-bg-hover: var(--uikit-color-primary-300);
   --uikit-scheme-solid-bg-active: var(--uikit-color-primary-200);
-  --uikit-scheme-solid-fg: var(--uikit-color-gray-900);
+  --uikit-scheme-solid-fg: #ffffff;
   --uikit-scheme-glow: 0 0 24px -6px var(--uikit-color-primary-400);
   --uikit-scheme-subtle-bg: var(--uikit-color-primary-900);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-primary-800);
@@ -126,7 +128,7 @@
   --uikit-scheme-solid-bg: var(--uikit-color-secondary-400);
   --uikit-scheme-solid-bg-hover: var(--uikit-color-secondary-300);
   --uikit-scheme-solid-bg-active: var(--uikit-color-secondary-200);
-  --uikit-scheme-solid-fg: var(--uikit-color-gray-900);
+  --uikit-scheme-solid-fg: #ffffff;
   --uikit-scheme-glow: 0 0 24px -6px var(--uikit-color-secondary-400);
   --uikit-scheme-subtle-bg: var(--uikit-color-secondary-900);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-secondary-800);
@@ -141,11 +143,12 @@
 
 :where([data-theme='dark'] [data-scheme='danger']) {
   /* 다크에서는 solid를 반전한다 — 밝은 면 + 거의 검은 글자. 네온 인상의 핵심이다. */
-  --uikit-scheme-solid-bg: var(--uikit-color-danger-400);
-  --uikit-scheme-solid-bg-hover: var(--uikit-color-danger-300);
-  --uikit-scheme-solid-bg-active: var(--uikit-color-danger-200);
-  --uikit-scheme-solid-fg: var(--uikit-color-gray-900);
-  --uikit-scheme-glow: 0 0 24px -6px var(--uikit-color-danger-400);
+  /* 명도를 한 단계 낮춘다 — 400은 다크 배경에서 지나치게 밝다 */
+  --uikit-scheme-solid-bg: var(--uikit-color-danger-500);
+  --uikit-scheme-solid-bg-hover: var(--uikit-color-danger-400);
+  --uikit-scheme-solid-bg-active: var(--uikit-color-danger-300);
+  --uikit-scheme-solid-fg: #ffffff;
+  --uikit-scheme-glow: 0 0 24px -6px var(--uikit-color-danger-500);
   --uikit-scheme-subtle-bg: var(--uikit-color-danger-900);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-danger-800);
   --uikit-scheme-subtle-fg: var(--uikit-color-danger-300);
@@ -164,7 +167,7 @@
   --uikit-scheme-solid-bg: var(--uikit-color-warning-400);
   --uikit-scheme-solid-bg-hover: var(--uikit-color-warning-300);
   --uikit-scheme-solid-bg-active: var(--uikit-color-warning-200);
-  --uikit-scheme-solid-fg: var(--uikit-color-gray-900);
+  --uikit-scheme-solid-fg: #ffffff;
   --uikit-scheme-glow: 0 0 24px -6px var(--uikit-color-warning-400);
   --uikit-scheme-subtle-bg: var(--uikit-color-warning-900);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-warning-800);
@@ -179,11 +182,12 @@
 
 :where([data-theme='dark'] [data-scheme='success']) {
   /* 다크에서는 solid를 반전한다 — 밝은 면 + 거의 검은 글자. 네온 인상의 핵심이다. */
-  --uikit-scheme-solid-bg: var(--uikit-color-success-400);
-  --uikit-scheme-solid-bg-hover: var(--uikit-color-success-300);
-  --uikit-scheme-solid-bg-active: var(--uikit-color-success-200);
-  --uikit-scheme-solid-fg: var(--uikit-color-gray-900);
-  --uikit-scheme-glow: 0 0 24px -6px var(--uikit-color-success-400);
+  /* 명도를 한 단계 낮춘다 — 400은 다크 배경에서 지나치게 밝다 */
+  --uikit-scheme-solid-bg: var(--uikit-color-success-500);
+  --uikit-scheme-solid-bg-hover: var(--uikit-color-success-400);
+  --uikit-scheme-solid-bg-active: var(--uikit-color-success-300);
+  --uikit-scheme-solid-fg: #ffffff;
+  --uikit-scheme-glow: 0 0 24px -6px var(--uikit-color-success-500);
   --uikit-scheme-subtle-bg: var(--uikit-color-success-900);
   --uikit-scheme-subtle-bg-hover: var(--uikit-color-success-800);
   --uikit-scheme-subtle-fg: var(--uikit-color-success-300);

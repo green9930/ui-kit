@@ -54,7 +54,8 @@
   padding-inline: var(--uikit-space-3);
   gap: var(--uikit-space-1);
   font-size: var(--uikit-font-size-sm);
-  border-radius: var(--uikit-radius-sm);
+  --uikit-button-radius: var(--uikit-radius-sm);
+  border-radius: var(--uikit-button-radius);
 }
 
 .button:where([data-size='md']) {
@@ -64,7 +65,8 @@
   padding-inline: var(--uikit-space-4);
   gap: var(--uikit-space-1-5);
   font-size: var(--uikit-font-size-sm);
-  border-radius: var(--uikit-radius-md);
+  --uikit-button-radius: var(--uikit-radius-md);
+  border-radius: var(--uikit-button-radius);
 }
 
 .button:where([data-size='lg']) {
@@ -74,19 +76,45 @@
   padding-inline: var(--uikit-space-5);
   gap: var(--uikit-space-2);
   font-size: var(--uikit-font-size-md);
-  border-radius: var(--uikit-radius-lg);
+  --uikit-button-radius: var(--uikit-radius-lg);
+  border-radius: var(--uikit-button-radius);
 }
 
 /* ---- variant ---- */
 
 .button:where([data-variant='solid']) {
+  position: relative;
   background-color: var(--uikit-scheme-solid-bg);
   color: var(--uikit-scheme-solid-fg);
   /*
-   * --uikit-scheme-glow는 다크 스킴 블록에서만 정의된다. 라이트에서는 var()가
-   * 폴백 none으로 떨어져 그림자가 자동으로 꺼지므로 테마 분기가 따로 필요 없다.
+   * --uikit-scheme-glow는 다크 스킴 블록에서만 정의된다. 라이트에서는 var()가 폴백으로
+   * 떨어져 그림자가 자동으로 꺼지므로 테마 분기가 필요 없다.
    */
-  box-shadow: var(--uikit-scheme-glow, none);
+  box-shadow: var(--uikit-scheme-glow, 0 0 #0000);
+}
+
+/*
+ * 가장자리에서 2px 안쪽에 그리는 불투명한 선. inset box-shadow로는 가장자리에 딱 붙는
+ * 선밖에 못 그려서 별도 레이어로 뺐다.
+ *
+ * inset이 1px인 이유: 절대 위치의 기준은 padding box인데, .button이 이미 1px 투명
+ * 테두리를 갖고 있어 padding box가 바깥 가장자리에서 1px 안쪽이다. 여기서 1px 더
+ * 들어가면 바깥 가장자리 기준 정확히 2px가 된다.
+ *
+ * radius도 안쪽으로 들어온 만큼 줄여야 모서리가 바깥 곡률과 평행하게 흐른다.
+ *
+ * 선 색은 면 색에서 출발해 글자색 쪽으로 조금만 이동시킨다. 글자색을 그대로 쓰면
+ * 면과 대비가 최대라 너무 튄다. 색을 섞는 방식이라 결과는 불투명하며, 라이트(어두운 면)
+ * 에서는 살짝 밝은 선, 다크(밝은 면)에서는 살짝 어두운 선이 되어 테마 분기가 필요 없다.
+ */
+.button:where([data-variant='solid'])::before {
+  content: '';
+  position: absolute;
+  inset: calc(2px - var(--uikit-border-width-thin));
+  border: var(--uikit-border-width-thin) solid
+    color-mix(in srgb, var(--uikit-scheme-solid-fg) var(--uikit-solid-ring-mix), var(--uikit-scheme-solid-bg));
+  border-radius: calc(var(--uikit-button-radius) - 2px);
+  pointer-events: none;
 }
 
 .button:where([data-variant='solid']:hover:not([data-disabled])) {
@@ -148,6 +176,11 @@
   border-color: transparent;
   /* 비활성 버튼이 발광하면 안 된다 */
   box-shadow: none;
+}
+
+/* 비활성 상태에서는 안쪽 선도 지운다 */
+.button:where([data-variant='solid'][data-disabled])::before {
+  border-color: transparent;
 }
 
 .button:where([data-variant='outline'][data-disabled]) {
